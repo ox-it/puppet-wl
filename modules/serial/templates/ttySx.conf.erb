@@ -1,0 +1,10 @@
+# <%= serialport %> - getty
+#
+# This service maintains a getty on <%= serialport %>
+# from the point the system is started until it is shut down again.
+
+start on stopped rc or RUNLEVEL=[2345]
+stop on runlevel [!2345]
+
+respawn
+exec /sbin/getty -L 115200 <%= serialport%> vt102
