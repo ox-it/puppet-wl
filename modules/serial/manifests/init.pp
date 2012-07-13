@@ -1,8 +1,9 @@
 # For managing tty on serial ports
+# It would be nice to have a facter find the serial ports.
 class serial {
 
   $serialport = 'ttyS0'
-
+  
   # Must be install, but just in case
   package { 'util-linux':
     ensure => installed,
