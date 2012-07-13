@@ -13,7 +13,7 @@ class serial {
     content => template('serial/ttySx.conf.erb'),
   }
 
-  service { $serialport:
+  service { "${serialport}":
     name => $serialport,
     ensure => running,
     enabled => true,
