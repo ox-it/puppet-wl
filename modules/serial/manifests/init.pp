@@ -13,10 +13,10 @@ class serial {
     content => template('serial/ttySx.conf.erb'),
   }
 
-  service { "${serialport}":
+  service { $serialport:
     name => $serialport,
     ensure => running,
-    enabled => true,
+    enable => true,
     subscribe => File["/etc/init/${serialport}.conf"],
     require => Package['util-linux'],
   }
