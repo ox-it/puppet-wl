@@ -17,6 +17,7 @@ class serial {
     name => $serialport,
     ensure => running,
     enable => true,
+    provider => 'upstart',
     subscribe => File["/etc/init/${serialport}.conf"],
     require => Package['util-linux'],
   }
