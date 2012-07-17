@@ -14,6 +14,8 @@ class users {
 
       user { "${user}":
         home => "/home/${user}",
+        shell => '/bin/bash',
+        managehome => true, # Doesn't update users, but works for new
         ensure => present,
         comment => "${name}",
 	groups => 'users', # Needed to allow ssh access
