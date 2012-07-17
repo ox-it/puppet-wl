@@ -2,7 +2,8 @@ class users {
   
   $krb-realm = "OX.AC.UK"
 
-  # Users who can login.
+  # Users who can login and setup their k5login.
+  # We assume people will have accounts that match their SSO name.
   define krb-user ($user = $title, $name) {
 
       k5login { "/home/${user}/.k5login":
@@ -17,6 +18,11 @@ class users {
         comment => "${name}",
 	groups => 'users', # Needed to allow ssh access
       }
+  }
+
+  # If we're adding people to a group make sure it exists.
+  group { "users":
+    ensure => present,
   }
 
   krb-user { 'buckett':
