@@ -11,5 +11,6 @@ node 'chedder' inherits default {
 # Node which runs our copy of nexus
 node 'feta' inherits default {
   include serial
+  include kerberos
   include nexus
 }
