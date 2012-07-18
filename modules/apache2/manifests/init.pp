@@ -1,7 +1,7 @@
 # Stolen from http://projects.puppetlabs.com/projects/1/wiki/Debian_Apache2_Recipe_Patterns
-$apache2_sites = "/etc/apache2/sites"
-$apache2_mods = "/etc/apache2/mods"
 class apache2 {
+  $apache2_sites = "/etc/apache2/sites"
+  $apache2_mods = "/etc/apache2/mods"
 
 
    # Define an apache2 site. Place all site configs into
@@ -14,14 +14,16 @@ class apache2 {
       case $ensure {
          'present' : {
             exec { "/usr/sbin/a2ensite $name":
-               unless => "/bin/readlink -e ${::apache2_sites}-enabled/$name",
+               unless => "/bin/readlink -e ${apache2::apache2_sites}-enabled/$name",
                notify => Exec["reload-apache2"],
+               require => Package['apache2'],
             }
          }
          'absent' : {
             exec { "/usr/sbin/a2dissite $name":
-               onlyif => "/bin/readlink -e ${::apache2_sites}-enabled/$name",
+               onlyif => "/bin/readlink -e ${apache2::apache2_sites}-enabled/$name",
                notify => Exec["reload-apache2"],
+               require => Package['apache2'],
             }
          }
          default: { err ( "Unknown ensure value: '$ensure'" ) }
@@ -38,14 +40,16 @@ class apache2 {
       case $ensure {
          'present' : {
             exec { "/usr/sbin/a2enmod $name":
-               unless => "/bin/readlink -e ${::apache2_mods}-enabled/${name}.load",
+               unless => "/bin/readlink -e ${apache2::apache2_mods}-enabled/${name}.load",
                notify => Exec["force-reload-apache2"],
+               require => Package['apache2'],
             }
          }
          'absent': {
             exec { "/usr/sbin/a2dismod $name":
-               onlyif => "/bin/readlink -e ${::apache2_mods}-enabled/${name}.load",
+               onlyif => "/bin/readlink -e ${apache2::apache2_mods}-enabled/${name}.load",
                notify => Exec["force-reload-apache2"],
+               require => Package['apache2'],
             }
          }
          default: { err ( "Unknown ensure value: '$ensure'" ) }
