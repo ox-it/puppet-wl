@@ -13,13 +13,12 @@ class nexus {
   $apache2_mods = "/etc/apache2/mods"
 
 
-  package { 'tomcat': 
-    name => "tomcat7",
+  package { 'tomcat7' : 
     ensure => installed,
   }
 
   # Disable the existing services
-  apache2::site { ['default', 'default-ssl']:
+  apache2::site { ['000-default', 'default-ssl']:
     ensure => 'absent',
   }
 
@@ -34,8 +33,7 @@ class nexus {
 
   file { '/etc/apache2/sites-available/maven-repo':
     content => template('nexus/maven-repo.erb'),
-    require => File['/etc/ssl/certs/utn-ca-chain.crt.pem', '/etc/ssl/certs/maven-repo.oucs.ox.ac.uk.crt'],
-    notify => Package['apache2'],
+    require => [ File['/etc/ssl/certs/utn-ca-chain.crt.pem', '/etc/ssl/certs/maven-repo.oucs.ox.ac.uk.crt'], Package['apache2'] ],
   }
   
   file { '/etc/ssl/certs/utn-ca-chain.crt.pem':
@@ -52,9 +50,8 @@ class nexus {
      mode => 644,
    }
 
-  service { 'tomcat':
-    name => 'tomcat7',
-    require => Package['tomcat'],
+  service { 'tomcat7':
+    require => Package['tomcat7'],
     subscribe => [ File['/etc/tomcat7/server.xml'], File['/etc/default/tomcat7'] ],
   }
 
@@ -81,7 +78,7 @@ class nexus {
     content => template('nexus/server.xml.erb'),
     owner => root,
     mode => 644,
-    require => Package['tomcat'],
+    require => Package['tomcat7'],
   }
   
   file { "${final}": 
@@ -100,7 +97,7 @@ class nexus {
 
   exec { 'install-nexus':
     cwd => "/tmp",
-    require => Package['tomcat'],
+    require => Package['tomcat7'],
     # -C - continue where we left off
     # -L follow redirects
     command => "/usr/bin/curl -C - -L -o ${download} ${url} && /bin/cp /tmp/${download} ${final}",
