@@ -18,7 +18,7 @@ TOMCAT7_GROUP=tomcat7
 # response time). If you use that option and you run Tomcat on a machine with
 # exactly one CPU chip that contains one or two cores, you should also add
 # the "-XX:+CMSIncrementalMode" option.
-https://issues.sonatype.org/browse/NEXUS-3671 - Set the user prefs to stop warnings logged
+# https://issues.sonatype.org/browse/NEXUS-3671 - Set the user prefs to stop warnings logged
 JAVA_OPTS="-Djava.awt.headless=true -Xmx128m -XX:+UseConcMarkSweepGC -Dplexus.nexus-work=<%= @nexuswork %> -Djava.util.prefs.userRoot=<%= @nexuswork %>"
 
 # To enable remote debugging uncomment the following line.
