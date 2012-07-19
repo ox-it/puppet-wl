@@ -14,3 +14,9 @@ node 'feta' inherits default {
   include kerberos
   include nexus
 }
+
+# Bits and bobs node.
+node 'sole' inherits default {
+  include serial
+  include kerbero
+}
