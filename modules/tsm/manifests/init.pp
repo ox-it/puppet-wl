@@ -10,10 +10,18 @@ class tsm ($server_name, $server_address, $server_port,
   $repo-url = "ftp://ftp.hfs.ox.ac.uk/repo/apt/deb/oucs-hfs-repo.deb"
   $repo-file = "${repo-package}.deb"
 
-  service { 'tsm-scheduler':
-    enable => true,
-    ensure => running,
+  if $scheduler_enabled == 1 {
+    service { 'tsm-scheduler': 
+      ensure => running,
+      enable => true,
+    }
+  } else {
+    service { 'tsm-scheduler': 
+      ensure => stopped,
+      enable => false,
+    }
   }
+
   
   package { 'tsm-client-base':
     ensure => installed,

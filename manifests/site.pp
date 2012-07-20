@@ -13,6 +13,13 @@ node 'feta' inherits default {
   include serial
   include kerberos
   include nexus
+  class { 'tsm':
+    server_name       => 'OX_HFS_B4',
+    server_address    => 'dsmb4.ox.ac.uk',
+    server_port       => '2600',
+    node_name         => 'feta.oucs',
+    scheduler_enabled => 1,
+  }
 }
 
 # Bits and bobs node.
