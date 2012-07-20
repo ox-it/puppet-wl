@@ -1,14 +1,19 @@
 # Does HFS/TSM backup
 # After setup you still need to set the password with:
 # dsmc set password
+# domain is the list of mount points to backup  (ALL-LOCAL is nice option)
 
 class tsm ($server_name, $server_address, $server_port,
-    $node_name, $password = '', $domain = '/'){
+    $node_name, $password = '', $domain = '/', $scheduler_enabled = 1){
 
   $repo-package = "oucs-hfs-repo"
   $repo-url = "ftp://ftp.hfs.ox.ac.uk/repo/apt/deb/oucs-hfs-repo.deb"
   $repo-file = "${repo-package}.deb"
 
+  service { 'tsm-scheduler':
+    enable => true,
+    ensure => running,
+  }
   
   package { 'tsm-client-base':
     ensure => installed,
@@ -40,6 +45,17 @@ class tsm ($server_name, $server_address, $server_port,
         mode    => 0644,
         require => Package["tsm-client-base"],
     }
+
+    file { "/opt/tivoli/tsm/client/ba/bin/dsmsched.rc":
+        ensure  => present,
+        content => template("tsm/dsmsched.rc.erb"),
+        owner   => root,
+        group   => root,
+        mode    => 0644,
+        require => Package["tsm-client-base"],
+	notify  => Service["tsm-scheduler"],
+    }
+
 
 
 }
