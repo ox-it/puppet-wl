@@ -2,16 +2,15 @@
 node default {
   include ssh
   include users
+  include serial
+  include kerberos
 }
 
 node 'chedder' inherits default {
-  include serial
 }
 
 # Node which runs our copy of nexus
 node 'feta' inherits default {
-  include serial
-  include kerberos
   include nexus
   class { 'tsm':
     server_name       => 'OX_HFS_B4',
@@ -24,6 +23,4 @@ node 'feta' inherits default {
 
 # Bits and bobs node.
 node 'sole' inherits default {
-  include serial
-  include kerberos
 }
