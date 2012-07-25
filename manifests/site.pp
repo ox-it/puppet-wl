@@ -4,6 +4,7 @@ node default {
   include users
   include serial
   include kerberos
+  include ssmtp
 }
 
 node 'chedder' inherits default {

@@ -24,7 +24,7 @@ class ssmtp {
     require => Package['ssmtp'],
   }
 
-  package { 'ssmtp':
+  package { ['ssmtp', 'bsd-mailx']:
     ensure => installed,
   }
 
