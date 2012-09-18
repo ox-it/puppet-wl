@@ -1,0 +1,51 @@
+Listen <%= ipaddress -%>:80
+
+<VirtualHost <%= ipaddress -%>:80>
+        ServerAdmin matthew.buckett@oucs.ox.ac.uk
+
+        # Force all traffic through https
+        RewriteEngine On 
+        RewriteCond %{SERVER_PORT} 80 
+        RewriteRule ^(.*)$ https://<%= hostname_virtual -%>/$1 [R,L]
+
+</VirtualHost>
+
+<IfModule mod_ssl.c>
+    # SSL name based virtual hosts are not yet supported, therefore no
+    # NameVirtualHost statement here
+    Listen <%= ipaddress -%>:443
+</IfModule>
+
+<IfModule ssl_module>
+<VirtualHost <%= ipaddress -%>:443>
+
+    DocumentRoot /var/www/jira
+
+    SSLEngine on
+    SSLCertificateFile      /etc/ssl/certs/<%= hostname_virtual -%>.crt
+    SSLCertificateKeyFile   /etc/ssl/private/<%= hostanme_virtual -%>.key
+    #SSLCertificateChainFile /etc/ssl/certs/cybertrust-chain.pem
+    SSLCertificateChainFile /etc/ssl/certs/utn-ca-chain.crt.pem
+
+
+        # Useful when doing an upgrade
+        #<Location />
+        #Deny from all
+        #Allow from paper.bumph.org
+        #</Location>
+
+        <Proxy *>
+                AddDefaultCharset Off
+                Order deny,allow
+                Allow from all
+        </Proxy>
+
+        ProxyPass /<%= context -%> ajp://localhost:8<<%= number -%>09/<%= context -%>
+        ProxyPassReverse /jira http://<%= hostname_virtual -%>/jira
+
+        # Redirect to the default webapp
+        RewriteEngine On 
+        RewriteRule ^/(<%= context -%>)?$ /<%= context -%>/ [R,L]
+
+</VirtualHost>
+</IfModule>
