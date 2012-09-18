@@ -60,6 +60,12 @@ class jira (
 			ensure => present,
 		}
 	}
+
+    # https://jira.atlassian.com/browse/JRA-23082
+    # OpenJDK doesn't work without fontconfig installed.
+    package { "fontconfig" :
+        ensure => present,
+    }
 	
 # download the WAR-EAR distribution of JIRA
 	exec { "download-jira":
