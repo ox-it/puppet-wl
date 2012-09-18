@@ -23,6 +23,8 @@ define tomcat::webapp(
 	$service_require = Class['tomcat'],
 	$source = undef,
 	$context = undef,
+    $ajp = true,
+    $http = true,
 	$max_number_open_files = undef
 ) {
 		tomcat::webapp::user { $username: 
@@ -35,6 +37,8 @@ define tomcat::webapp(
 			number => $number,
 			server_host_config => $server_host_config,
 			webapp_base => $webapp_base,
+            ajp => $ajp,
+            http => $http,
 			require => Tomcat::Webapp::User[$username],
 		}
 		tomcat::webapp::service { $username:

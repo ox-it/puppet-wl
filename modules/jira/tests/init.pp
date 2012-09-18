@@ -70,6 +70,7 @@ class { "jira":
 	jira_jars_version => "5.1",
 	contextroot => "jira",
 	webapp_base => "/opt", # JIRA will be installed in /opt/jira
+    ajp => false, # Not needed here.
 	require => [
 		Mysql::Db['jiradb'],
 		Class["tomcat"],

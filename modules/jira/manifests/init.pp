@@ -26,6 +26,8 @@ class jira (
 	$jira_jars_version = "5.1",
 	$contextroot = "jira",
 	$webapp_base = "/srv",
+    $http = true,
+    $ajp = true,
 ){
 	
 # configuration
@@ -219,6 +221,8 @@ class jira (
 		webapp_base => $webapp_base,
 		java_opts => "-server -Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true -Dmail.mime.decodeparameters=true -Xms128m -Xmx384m -XX:MaxPermSize=256m -Djava.awt.headless=true",
 		server_host_config => template("jira/context.erb"),
+        ajp => $ajp,
+        http => $http,
 		service_require => [
 			Exec['build-jira'],
 			File['jira-db-driver'],
