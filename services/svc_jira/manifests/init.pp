@@ -95,6 +95,13 @@ class svc_jira {
         mode => 0644,
     }
 
+    file { "/etc/ssl/certs/utn-ca-chain.crt.pem":
+        owner => root,
+        group => root,
+        mode => 0644,
+        source => "puppet:///modules/svc_jira/ssl/utn-ca-chain.crt.pem",
+    }
+
     file { "/etc/ssl/private/${hostname_virtual}.key":
         owner => root,
         group => ssl-cert,
@@ -106,6 +113,7 @@ class svc_jira {
             File["/etc/apache2/sites-available/jira"],
             File["/etc/ssl/certs/${hostname_virtual}.crt"],
             File["/etc/ssl/private/${hostname_virtual}.key"],
+            File["/etc/ssl/certs/utn-ca-chain.crt.pem"],
             Class["jira"],
         ]
     }
