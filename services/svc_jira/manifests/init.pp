@@ -1,8 +1,6 @@
 # The Jira Service, frontended by Apache
-class { "svc_jira" :
-
+class svc_jira {
     include mysql
-    include jira
     include tomcat
     include apache2
     include secrets
@@ -37,6 +35,10 @@ class { "svc_jira" :
         ensure => directory,
     }
 
+    package { "unzip" :
+        ensure => installed,
+    }
+
     
     exec { "extract-db-driver":
         # The -j drops all folders, -o overwrite, and just extract the one file.
@@ -66,7 +68,6 @@ class { "svc_jira" :
         jira_jars_version => "5.1",
         contextroot => "jira",
         webapp_base => "/opt", # JIRA will be installed in /opt/jira
-        http => false,
         require => [
                 Mysql::Db['jiradb'],
                 Class["tomcat"],
@@ -81,10 +82,11 @@ class { "svc_jira" :
 
     # The Apache frontend.
     file { "/etc/apache2/sites-available/jira":
-        content => template('svc_jira/templates/apache/jira.erb'),
+        content => template('svc_jira/apache/jira.erb'),
         owner => root,
         group => root,
         mode => 0644,
+        require => Package["apache2"],
     }
 
     file { "/etc/ssl/certs/${hostname_virtual}.crt":
@@ -107,6 +109,18 @@ class { "svc_jira" :
             Class["jira"],
         ]
     }
-        
+
+    apache2::module { "rewrite":
+        ensure => "present",
+    }
+
+    apache2::module { "proxy_ajp":
+        ensure => "present",
+    }
+
+    apache2::module { "ssl":
+        ensure => "present",
+    }
         
 }
+
