@@ -12,7 +12,7 @@ Running
 
 To run this on a node use:
 
-    puppet apply --modulepath /etc/puppet/modules/ /etc/puppet/manifests/site.pp 
+    puppet apply --modulepath /etc/puppet/modules/:/etc/puppet/services/ /etc/puppet/manifests/site.pp 
 to test a module on a node use:
 
-   puppet apply --modulepath /etc/puppet/modules/ -e "include users"
+   puppet apply --modulepath /etc/puppet/modules/:/etc/puppet/services/ -e "include users"
