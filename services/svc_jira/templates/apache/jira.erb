@@ -1,7 +1,7 @@
-Listen <%= ipaddress -%>:80
 
 <VirtualHost <%= ipaddress -%>:80>
         ServerAdmin matthew.buckett@oucs.ox.ac.uk
+        ServerName <%= hostname_virtual -%>
 
         # Force all traffic through https
         RewriteEngine On 
@@ -10,20 +10,15 @@ Listen <%= ipaddress -%>:80
 
 </VirtualHost>
 
-<IfModule mod_ssl.c>
-    # SSL name based virtual hosts are not yet supported, therefore no
-    # NameVirtualHost statement here
-    Listen <%= ipaddress -%>:443
-</IfModule>
-
 <IfModule ssl_module>
 <VirtualHost <%= ipaddress -%>:443>
 
+    ServerName <%= hostname_virtual %>
     DocumentRoot /var/www/jira
 
     SSLEngine on
     SSLCertificateFile      /etc/ssl/certs/<%= hostname_virtual -%>.crt
-    SSLCertificateKeyFile   /etc/ssl/private/<%= hostanme_virtual -%>.key
+    SSLCertificateKeyFile   /etc/ssl/private/<%= hostname_virtual -%>.key
     #SSLCertificateChainFile /etc/ssl/certs/cybertrust-chain.pem
     SSLCertificateChainFile /etc/ssl/certs/utn-ca-chain.crt.pem
 
@@ -40,7 +35,7 @@ Listen <%= ipaddress -%>:80
                 Allow from all
         </Proxy>
 
-        ProxyPass /<%= context -%> ajp://localhost:8<<%= number -%>09/<%= context -%>
+        ProxyPass /<%= context -%> ajp://localhost:8<%= number -%>09/<%= context %>
         ProxyPassReverse /jira http://<%= hostname_virtual -%>/jira
 
         # Redirect to the default webapp
