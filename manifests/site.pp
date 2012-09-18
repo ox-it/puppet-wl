@@ -22,6 +22,11 @@ node 'feta' inherits default {
   }
 }
 
+# Node which runs jira.oucs.ox.ac.uk
+node 'edam' inherits default {
+    include svc_jira
+}
+
 # Bits and bobs node.
 node 'sole' inherits default {
 }
