@@ -104,7 +104,7 @@ class svc_jira {
 
     file { "/etc/ssl/private/${hostname_virtual}.key":
         owner => root,
-        group => ssl-cert,
+        group => root,
         mode => 0640,
     }
 
