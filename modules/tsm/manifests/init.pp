@@ -1,6 +1,8 @@
 # Does HFS/TSM backup
 # After setup you still need to set the password with:
 # dsmc set password
+# For working out the ports look at
+# http://www.oucs.ox.ac.uk/hfs/help/firewall.xml
 # domain is the list of mount points to backup  (ALL-LOCAL is nice option)
 
 class tsm ($server_name, $server_address, $server_port,
