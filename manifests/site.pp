@@ -28,7 +28,7 @@ node 'edam' inherits default {
     class { 'tsm':
         server_name       => 'OX_HFS_B2',
         server_address    => 'dsmb2.ox.ac.uk',
-        server_port       => '2600',
+        server_port       => '2500',
         node_name         => 'edam.oucs',
         scheduler_enabled => 1,
     }
