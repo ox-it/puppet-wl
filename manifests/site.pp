@@ -25,6 +25,13 @@ node 'feta' inherits default {
 # Node which runs jira.oucs.ox.ac.uk
 node 'edam' inherits default {
     include svc_jira
+    class { 'tsm':
+        server_name       => 'OX_HFS_B2',
+        server_address    => 'dsmb2.ox.ac.uk',
+        server_port       => '2600',
+        node_name         => 'edam.oucs',
+        scheduler_enabled => 1,
+    }
 }
 
 # Bits and bobs node.
