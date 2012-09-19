@@ -68,6 +68,7 @@ class svc_jira {
         jira_jars_version => "5.1",
         contextroot => "jira",
         webapp_base => "/opt", # JIRA will be installed in /opt/jira
+        http => false,
         require => [
                 Mysql::Db['jiradb'],
                 Class["tomcat"],
