@@ -1,0 +1,3 @@
+# The package repository for Jenkins
+deb http://pkg.jenkins-ci.org/debian binary/
+
