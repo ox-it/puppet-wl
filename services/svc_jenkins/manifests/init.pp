@@ -1,6 +1,7 @@
 # The Jira Service, frontended by Apache
 class svc_jenkins (
     $hostname_virtual,
+    $listen = '*',
     $http_port = 8080,
     $ajp_port = -1,
     ){
@@ -53,6 +54,11 @@ class svc_jenkins (
             File["/etc/ssl/certs/utn-ca-chain.crt.pem"],
             Class["jenkins"],
         ]
+    }
+
+    # Remove the default apache site
+    apache2::site { "000-default":
+        ensure => absent,
     }
 
     apache2::module { "proxy_http":
