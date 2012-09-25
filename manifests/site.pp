@@ -34,6 +34,21 @@ node 'edam' inherits default {
     }
 }
 
+# Node which runs jenkins.oucs.ox.ac.uk
+node 'chedder' inherits default {
+    class { 'svc_jenkins':
+        hostname_virtual => 'jenkins.oucs.ox.ac.uk',
+    }
+    class { 'tsm':
+        server_name       => 'OX_HFS_B2',
+        server_address    => 'dsmb2.ox.ac.uk',
+        server_port       => '2500',
+        node_name         => 'chedder.oucs',
+        scheduler_enabled => 1,
+    }
+
+}
+
 # Bits and bobs node.
 node 'sole' inherits default {
 }
