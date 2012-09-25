@@ -21,7 +21,7 @@ class jenkins () {
     exec { 'apt-key add jenkins':
         command => "wget -q -O - ${apt_key_url} | apt-key --keyring ${apt_key_file} add -",
         path => '/bin:/usr/bin',
-        creates => $apt_key,
+        creates => $apt_key_file,
         require => Package['wget'],
     }
 
