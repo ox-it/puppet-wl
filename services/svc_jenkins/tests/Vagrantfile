@@ -1,0 +1,14 @@
+Vagrant::Config.run do |config|
+  config.vm.box = "precise64_oxford"
+  config.vm.box_url = "http://users.ox.ac.uk/~wlteam/precise64_oxford.box"
+
+  config.vm.forward_port 80, 8080
+  config.vm.forward_port 443, 8443
+  
+  config.vm.customize ["modifyvm", :id, "--memory", 1024]  
+  
+  config.vm.provision :puppet, :module_path => ["../../", "../../../modules"] do |puppet|
+     puppet.manifests_path = "."
+     puppet.manifest_file  = "init.pp"
+  end
+end

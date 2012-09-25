@@ -1,0 +1,42 @@
+
+<VirtualHost <%= ipaddress -%>:80>
+        ServerAdmin matthew.buckett@oucs.ox.ac.uk
+        ServerName <%= hostname_virtual -%>
+
+        # Force all traffic through https
+        RewriteEngine On 
+        RewriteCond %{SERVER_PORT} 80 
+        RewriteRule ^(.*)$ https://<%= hostname_virtual -%>/$1 [R,L]
+
+</VirtualHost>
+
+<IfModule ssl_module>
+<VirtualHost <%= ipaddress -%>:443>
+
+    ServerName <%= hostname_virtual %>
+
+    SSLEngine on
+    SSLCertificateFile      /etc/ssl/certs/<%= hostname_virtual -%>.crt
+    SSLCertificateKeyFile   /etc/ssl/private/<%= hostname_virtual -%>.key
+    #SSLCertificateChainFile /etc/ssl/certs/cybertrust-chain.pem
+    SSLCertificateChainFile /etc/ssl/certs/utn-ca-chain.crt.pem
+
+
+        # Useful when doing an upgrade
+        #<Location />
+        #Deny from all
+        #Allow from paper.bumph.org
+        #</Location>
+
+        <Proxy *>
+                AddDefaultCharset Off
+                Order deny,allow
+                Allow from all
+        </Proxy>
+
+        # AJP is broken http://issues.hudson-ci.org/browse/HUDSON-5753
+        ProxyPass / http://localhost:<%= http_port -%>/
+        ProxyPassReverse / http://<%= hostname_virtual -%>/
+
+</VirtualHost>
+</IfModule>
