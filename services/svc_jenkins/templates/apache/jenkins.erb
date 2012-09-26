@@ -36,7 +36,7 @@
 
         # AJP is broken http://issues.hudson-ci.org/browse/HUDSON-5753
         ProxyPass / http://localhost:<%= http_port -%>/
-        ProxyPassReverse / http://<%= hostname_virtual -%>/
+        ProxyPassReverse / https://<%= hostname_virtual -%>/
 
 </VirtualHost>
 </IfModule>
