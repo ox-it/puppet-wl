@@ -36,7 +36,7 @@
         </Proxy>
 
         ProxyPass /<%= context -%> ajp://localhost:8<%= number -%>09/<%= context %>
-        ProxyPassReverse /jira http://<%= hostname_virtual -%>/jira
+        ProxyPassReverse /<%= context -%> ajp://localhost:8<%= number -%>09/<%= context %>
 
         # Redirect to the default webapp
         RewriteEngine On 
