@@ -8,6 +8,7 @@ class svc_jira {
     $hostname_virtual = "jira.oucs.ox.ac.uk"
     $context = "jira"
     $number = 0
+    $listen = '*'
 
 
     $dbpass = sha1("${fqdn}${secrets::secret}jirauser")

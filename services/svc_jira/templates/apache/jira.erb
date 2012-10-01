@@ -1,5 +1,5 @@
 
-<VirtualHost <%= ipaddress -%>:80>
+<VirtualHost <%= listen -%>:80>
         ServerAdmin matthew.buckett@oucs.ox.ac.uk
         ServerName <%= hostname_virtual -%>
 
@@ -11,7 +11,7 @@
 </VirtualHost>
 
 <IfModule ssl_module>
-<VirtualHost <%= ipaddress -%>:443>
+<VirtualHost <%= listen -%>:443>
 
     ServerName <%= hostname_virtual %>
     DocumentRoot /var/www/jira
