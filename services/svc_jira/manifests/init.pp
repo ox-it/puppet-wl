@@ -5,6 +5,7 @@ class svc_jira {
     include apache2
     include secrets
 
+    # All these should be passed in.
     $hostname_virtual = "jira.oucs.ox.ac.uk"
     $context = "jira"
     $number = 0
