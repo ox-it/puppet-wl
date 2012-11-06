@@ -55,6 +55,11 @@ class nexus {
     subscribe => [ File['/etc/tomcat7/server.xml'], File['/etc/default/tomcat7'] ],
   }
 
+  exec { 'cleanout-webapp':
+    command => "/bin/rm -r /var/lib/tomcat/webapps/ROOT",
+    notifyonly => true,
+  }
+
 
   # Needed for setting plexis home in the system properties args
   file { "/etc/default/tomcat7": 
@@ -85,6 +90,7 @@ class nexus {
     require => [ Exec['install-nexus'], File ["${install_dir}"] ],
     owner => root,
     mode => 644,
+    notify => Exec['cleanout-webapp'],
   }
 
 
