@@ -51,3 +51,8 @@ node 'chedder' inherits default {
 # Bits and bobs node.
 node 'sole' inherits default {
 }
+
+# This node runs git-sync to push changes in the Sakai SVN to github.
+node 'swiss' inherits default {
+    include git-sync
+}
