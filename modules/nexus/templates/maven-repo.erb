@@ -1,5 +1,7 @@
 
 <VirtualHost <%= @maven_repo_ip %>:80>
+    ServerName maven-repo.oucs.ox.ac.uk
+
         # We can't do this as maven doesn't correctly follow HTTP->HTTPS redirect.
         # http://jira.codehaus.org/browse/WAGON-314
         # Force all traffic through https
@@ -18,6 +20,10 @@
 
 <IfModule ssl_module>
 <VirtualHost <%= @maven_repo_ip %>:443>
+
+    # Must have server name otherwise Java 1.7 complains when it tries SNI
+    # http://stackoverflow.com/questions/7615645/ssl-handshake-alert-unrecognized-name-error-since-upgrade-to-java-1-7-0
+    ServerName maven-repo.oucs.ox.ac.uk
 
     SSLEngine on
     SSLCertificateFile      /etc/ssl/certs/maven-repo.oucs.ox.ac.uk.crt
