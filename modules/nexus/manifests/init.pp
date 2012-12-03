@@ -57,7 +57,7 @@ class nexus {
 
   exec { 'cleanout-webapp':
     command => "/bin/rm -r /var/lib/tomcat/webapps/ROOT",
-    notifyonly => true,
+    refreshonly => true,
   }
 
 
