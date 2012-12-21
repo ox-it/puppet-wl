@@ -1,0 +1,13 @@
+# Rotate the TSM logs
+/var/log/dsmsched.log /var/log/dsmerror.log {
+    weekly
+    rotate 4
+    missingok
+    create 640 root adm
+    compress
+    sharedscripts
+    postrotate
+        /etc/init.d/tsm-scheduler restart
+    endscript
+}
+

@@ -65,6 +65,15 @@ class tsm ($server_name, $server_address, $server_port,
         require => Package["tsm-client-base"],
 	notify  => Service["tsm-scheduler"],
     }
+    
+    # Logrotate for the logfiles
+    file { "/etc/logrotate.d/tsm":
+    	ensure => file,
+    	source => 'puppet:///modules/tsm/tsm.logrotate',
+    	owner => root,
+    	group => root,
+    	mode => 0644,
+    }
 
 
 
