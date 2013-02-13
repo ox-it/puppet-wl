@@ -1,0 +1,3 @@
+# Percona apt repository from which xtrabackup comes from
+deb http://repo.percona.com/apt precise main
+deb-src http://repo.percona.com/apt precise main
