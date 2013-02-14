@@ -50,6 +50,7 @@ node 'chedder' inherits default {
 
 # Node which runs sonar
 node 'perch' inherits default {
+    include svc_sonar
 }
 
 # Bits and bobs node.
