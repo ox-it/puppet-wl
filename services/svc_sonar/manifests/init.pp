@@ -19,6 +19,10 @@ class svc_sonar {
         owner   => "$dbuser",
     }
 
+	package { 'java7-runtime-headless':
+        ensure => present,
+	}
+
     # Setup Sonar
     class{ 'sonar':
         app_base => '/opt',
@@ -26,6 +30,6 @@ class svc_sonar {
         database_pass => "$dbpass",
         database_url  => "jdbc:mysql://localhost/${dbname}",
 
-        require => Mysql::Db[$dbname],
+        require => [Mysql::Db[$dbname], Package['java7-runtime-headless']],
     }
 }
