@@ -19,7 +19,7 @@ class sonar (
 
     user { "$user" :
         ensure => present,
-        shell => '/dev/null',
+        shell => '/bin/false',
     }->
     file { "$install_dir" :
         ensure => directory,
@@ -52,6 +52,7 @@ class sonar (
     }->
     exec { 'start-sonar' :
         command => "${install_dir}/${folder}/bin/linux-x86-64/sonar.sh",
+        user    => "$user",
         require => Exec['unzip-sonar']
     }
 }
