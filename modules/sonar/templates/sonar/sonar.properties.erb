@@ -39,6 +39,7 @@ sonar.web.port:                           80
 # Permissions to create tables and indexes must be granted to JDBC user.
 # The schema must be created first.
 sonar.jdbc.username:                       <%= database_user -%>
+
 sonar.jdbc.password:                       <%= database_pass -%>
 
 #----- Embedded database H2
@@ -47,6 +48,7 @@ sonar.jdbc.password:                       <%= database_pass -%>
   
 # Comment the following line to deactivate the default embedded database.
 sonar.jdbc.url:                            <%= database_url -%>
+
 #sonar.jdbc.driverClassName:                org.h2.Driver
 
 # directory containing H2 database files. By default it's the /data directory in the sonar installation.
