@@ -5,7 +5,7 @@ class sonar (
 
 	$database_user = 'sonar',
 	$database_pass = 'sonar',
-	$database_url  = 'jdbc:mysql://localhost/sonar',) {
+	$database_url  = 'jdbc:h2:tcp://localhost:9092/sonar',) {
 
     $folder = "sonar-${version}"
     $package = "${folder}.zip"
