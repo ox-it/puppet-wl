@@ -20,10 +20,10 @@ class svc_sonar {
 
     # Setup Sonar
     class{ 'sonar':
-        $app_base => '/opt',
-        $database_user => "$dbuser",
-        $database_pass => "$dbpass",
-        $database_url  => "jdbc:mysql://localhost/${dbname}",
+        app_base => '/opt',
+        database_user => "$dbuser",
+        database_pass => "$dbpass",
+        database_url  => "jdbc:mysql://localhost/${dbname}",
 
         require => Mysql::Db[$dbname],
     }
