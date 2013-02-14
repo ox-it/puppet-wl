@@ -51,7 +51,7 @@ class sonar (
         mode => 0644,
     }->
     exec { 'start-sonar' :
-        command => "${install_dir}/${folder}/bin/linux-x86-64/sonar.sh",
+        command => "${install_dir}/${folder}/bin/linux-x86-64/sonar.sh start",
         user    => "$user",
         require => Exec['unzip-sonar']
     }
