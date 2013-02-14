@@ -44,14 +44,14 @@ class sonar (
 			Package['unzip'],
         ]
     }->
-    file { "$destination/conf/sonar.properties":
+    file { "${install_dir}/${folder}/conf/sonar.properties":
         content => template('sonar/sonar/sonar.properties.erb'),
         owner => $user,
         group => $user,
         mode => 0644,
     }->
     exec { 'start-sonar' :
-        command => "${destination}/bin/linux-x86-64/sonar.sh",
+        command => "${install_dir}/${folder}/bin/linux-x86-64/sonar.sh",
         require => Exec['unzip-sonar']
     }
 }
