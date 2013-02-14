@@ -48,6 +48,10 @@ node 'chedder' inherits default {
     }
 }
 
+# Node which runs sonar
+node 'perch' inherits default {
+}
+
 # Bits and bobs node.
 node 'sole' inherits default {
 }
