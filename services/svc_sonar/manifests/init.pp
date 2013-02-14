@@ -19,9 +19,9 @@ class svc_sonar {
         owner   => "$dbuser",
     }
 
-	package { 'java7-runtime-headless':
+    package { 'java7-runtime-headless':
         ensure => present,
-	}
+    }
 
     # Setup Sonar
     class{ 'sonar':

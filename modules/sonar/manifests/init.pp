@@ -1,11 +1,11 @@
 class sonar (
-	$user = 'sonar',
+    $user = 'sonar',
     $version = '3.4.1',
-	$app_base = '/srv',
+    $app_base = '/srv',
 
-	$database_user = 'sonar',
-	$database_pass = 'sonar',
-	$database_url  = 'jdbc:h2:tcp://localhost:9092/sonar',) {
+    $database_user = 'sonar',
+    $database_pass = 'sonar',
+    $database_url  = 'jdbc:h2:tcp://localhost:9092/sonar',) {
 
     $folder = "sonar-${version}"
     $package = "${folder}.zip"
@@ -13,9 +13,9 @@ class sonar (
     $install_dir = "$app_base/$user"
     $destination = "$install_dir/$package"
 
-	package{ 'unzip':
-		ensure => present,
-	}
+    package{ 'unzip':
+        ensure => present,
+    }
 
     user { "$user" :
         ensure => present,
@@ -41,7 +41,7 @@ class sonar (
         user    => "$user",
         require => [
             Exec['download-sonar'],
-			Package['unzip'],
+            Package['unzip'],
         ]
     }->
     file { "${install_dir}/${folder}/conf/sonar.properties":
