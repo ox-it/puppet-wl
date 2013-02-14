@@ -1,12 +1,13 @@
 # The sonar Service, frontended by Apache
 class svc_sonar {
     include mysql
+    include secrets
 
     $app = 'sonar'
 
     $dbuser = "${app}user"
     $dbname = "${app}db"
-    $dbpass = sha1("${fqdn}${secrets::secret}${app}")
+    $dbpass = sha1("${fqdn}${secrets::root}${app}")
 
     # Setup the Mysql user and DB
     mysql::user { "$dbuser":
