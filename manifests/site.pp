@@ -5,6 +5,7 @@ node default {
   include serial
   include kerberos
   include ssmtp
+  Exec { path => "/usr/bin:/usr/sbin/:/bin:/sbin" }
 }
 
 # Node which runs our copy of nexus
