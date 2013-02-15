@@ -13,7 +13,19 @@ class svc_sonar {
     mysql::user { "$dbuser":
         username => "$dbuser",
         password => "$dbpass",
-    }->
+    }
+    mysql::user { 'jenkins':
+        username => 'jenkins',
+        password => file("/etc/mysql-jenkins-secret"),
+    }
+
+    exec { "grant-mysqldb-jenkins" :
+        command => "mysql -u root -e \"GRANT ALL ON ${dbname}.* TO 'jenkins'@'0.0.0.0';\"",
+        unless => "mysql -u root -s -N -r -e \"SHOW GRANTS FOR 'jenkins'@'0.0.0.0';\" | grep -q '${dbname}'",
+        path => ["/bin", "/usr/bin"],
+		require => [Class["mysql"],Mysql::User['jenkins']],
+    }
+
     mysql::db { "$dbname":
         name    => "$dbname",
         owner   => "$dbuser",
