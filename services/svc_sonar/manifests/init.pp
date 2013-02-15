@@ -19,11 +19,15 @@ class svc_sonar {
         password => file("/etc/mysql-jenkins-secret"),
     }
 
+    $jenkins_password = file("/etc/mysql-jenkins-secret")
+    exec { "create-mysql-user-jenkins" :
+        command =>  "mysql -u root -e \"CREATE USER 'jenkins'@'%' IDENTIFIED BY '${jenkins_password}';\"",
+        unless => "mysql -u root -N -r -s -e 'SELECT DISTINCT user FROM mysql.user' | grep -q '^jenkins\$'",
+        require => Class["mysql"],
+    }->
     exec { "grant-mysqldb-jenkins" :
-        command => "mysql -u root -e \"GRANT ALL ON ${dbname}.* TO 'jenkins'@'0.0.0.0';\"",
-        unless => "mysql -u root -s -N -r -e \"SHOW GRANTS FOR 'jenkins'@'0.0.0.0';\" | grep -q '${dbname}'",
-        path => ["/bin", "/usr/bin"],
-		require => [Class["mysql"],Mysql::User['jenkins']],
+        command => "mysql -u root -e \"GRANT ALL ON ${dbname}.* TO 'jenkins'@'%';\"",
+        unless => "mysql -u root -s -N -r -e \"SHOW GRANTS FOR 'jenkins'@'%';\" | grep -q '${dbname}'",
     }
 
     mysql::db { "$dbname":
