@@ -14,10 +14,6 @@ class svc_sonar {
         username => "$dbuser",
         password => "$dbpass",
     }
-    mysql::user { 'jenkins':
-        username => 'jenkins',
-        password => file("/etc/mysql-jenkins-secret"),
-    }
 
     $jenkins_password = file("/etc/mysql-jenkins-secret")
     exec { "create-mysql-user-jenkins" :
