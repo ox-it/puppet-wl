@@ -5,6 +5,7 @@ node default {
   include serial
   include kerberos
   include ssmtp
+  Exec { path => "/usr/bin:/usr/sbin/:/bin:/sbin" }
 }
 
 # Node which runs our copy of nexus
@@ -46,6 +47,11 @@ node 'chedder' inherits default {
     users::krb-user { 'oucs0164':
         name => 'Colin Hebert',
     }
+}
+
+# Node which runs sonar
+node 'perch' inherits default {
+    include svc_sonar
 }
 
 # Bits and bobs node.
