@@ -1,5 +1,6 @@
 # The Jira Service, frontended by Apache
 class svc_jira {
+	include apt
     include mysql
     include tomcat
     include apache2
@@ -13,7 +14,7 @@ class svc_jira {
 
 
     $dbpass = sha1("${fqdn}${secrets::secret}jirauser")
-    $driver_url = "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.21.zip/from/http://cdn.mysql.com/"
+    $driver_url = "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.23.zip/from/http://cdn.mysql.com/"
 
     # Setup the Mysql user and DB
     mysql::user { 'jirauser': 
@@ -27,8 +28,8 @@ class svc_jira {
 
     # download extra libraries needed by JIRA
     exec { "download-db-driver":
-        command => "/usr/bin/wget -O /tmp/mysql-connector-java-5.1.21.zip ${driver_url}",
-        creates => "/tmp/mysql-connector-java-5.1.21.zip",
+        command => "/usr/bin/wget -O /tmp/mysql-connector-java-5.1.23.zip ${driver_url}",
+        creates => "/tmp/mysql-connector-java-5.1.23.zip",
         timeout => 1200,
     }
 
@@ -44,8 +45,8 @@ class svc_jira {
     
     exec { "extract-db-driver":
         # The -j drops all folders, -o overwrite, and just extract the one file.
-        command => "/usr/bin/unzip -j  -o -d /var/cache/puppet/jira /tmp/mysql-connector-java-5.1.21.zip *mysql-connector-java-5.1.21-bin.jar",
-        creates =>"/var/cache/puppet/jira/mysql-connector-java-5.1.21-bin.jar",
+        command => "/usr/bin/unzip -j  -o -d /var/cache/puppet/jira /tmp/mysql-connector-java-5.1.23.zip *mysql-connector-java-5.1.23-bin.jar",
+        creates =>"/var/cache/puppet/jira/mysql-connector-java-5.1.23-bin.jar",
         require => [
             Package["unzip"],
             File["/var/cache/puppet/jira"],
@@ -60,14 +61,14 @@ class svc_jira {
         database_type => "mysql",
         database_schema => "",
         database_driver => "com.mysql.jdbc.Driver",
-        database_driver_jar => "mysql-connector-java-5.1.21-bin.jar",
-        database_driver_source => "file:///var/cache/puppet/jira/mysql-connector-java-5.1.21-bin.jar",
+        database_driver_jar => "mysql-connector-java-5.1.23-bin.jar",
+        database_driver_source => "file:///var/cache/puppet/jira/mysql-connector-java-5.1.23-bin.jar",
         database_url => "jdbc:mysql://localhost/jiradb",
         database_user => "jirauser",
         database_pass => $dbpass,
         number => $number, # the Tomcat http port will be 8280
-        version => "5.1.4", # the JIRA version
-        jira_jars_version => "5.1",
+        version => "5.2.7", # the JIRA version
+        jira_jars_version => "5.2",
         contextroot => "jira",
         webapp_base => "/opt", # JIRA will be installed in /opt/jira
         http => false,
