@@ -4,9 +4,9 @@ class nexus {
   include apache2
 
   $maven_repo_ip = "_default_" # Or $ipaddress
-  $version = "2.3.1"
+  $version = "2.3.1-01"
   $download = "nexus-${version}.war"
-  $url = "http://www.sonatype.org/downloads/nexus-${version}.war"
+  $url = "http://download.sonatype.com/nexus/oss/${download}"
   $install_dir = "/var/lib/nexus"
   $final = "/var/lib/tomcat7/webapps/${download}" # Keep the version as we're creating a custom context.xml
   $nexuswork = "${install_dir}/sonatype-work"
