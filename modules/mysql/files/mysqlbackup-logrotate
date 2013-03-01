@@ -1,0 +1,10 @@
+# This rotates the MySQL backups
+# We could do the dump in the postrotate, but we leave it in cron to allow easy manual dumps
+# A useful way to check this is doing what you expect is:
+# logrotate -vf /etc/logrotate.d/mysqlbackup 
+/var/backups/mysql/mysql.backup {
+        daily
+        rotate 7
+        nocreate
+        compress
+}
