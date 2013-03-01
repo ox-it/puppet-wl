@@ -90,7 +90,7 @@ class nexus {
     require => [ Exec['install-nexus'], File ["${install_dir}"] ],
     owner => root,
     mode => 644,
-    notify => Exec['cleanout-webapp'],
+    notify => [Exec['cleanout-webapp'], Service['tomcat7']],
   }
 
 
