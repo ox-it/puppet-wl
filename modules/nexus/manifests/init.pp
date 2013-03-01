@@ -106,7 +106,7 @@ class nexus {
     require => Package['tomcat7'],
     # -C - continue where we left off
     # -L follow redirects
-    command => "/usr/bin/curl -C - -L -o ${download} ${url} && /bin/cp /tmp/${download} ${final}",
+    command => "/usr/bin/curl -L -o ${download} ${url} && /bin/cp /tmp/${download} ${final}",
     creates => "${final}",
   }
 }
