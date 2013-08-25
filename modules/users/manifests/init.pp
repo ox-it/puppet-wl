@@ -2,6 +2,13 @@ class users {
   
   $krb-realm = "OX.AC.UK"
 
+  # Function to disable a user.
+  define disableuser() {
+      exec { "/usr/bin/passwd -l $name":
+        unless => "/usr/bin/passwd -S $name | grep '$name L'"
+      }
+  }
+
   # Users who can login and setup their k5login.
   # We assume people will have accounts that match their SSO name.
   define krb-user ($user = $title, $name) {
@@ -18,7 +25,7 @@ class users {
         managehome => true, # Doesn't update users, but works for new
         ensure => present,
         comment => "${name}",
-	groups => 'users', # Needed to allow ssh access
+        groups => 'users', # Needed to allow ssh access
       }
   }
 
@@ -31,8 +38,11 @@ class users {
     name => 'Matthew Buckett',
   }
 
-  krb-user { 'oucs0164':
+  # Disable Colin's account
+  user { 'oucs0164':
     name => 'Colin Hebert',
+    shell => '/bin/false',
+    ensure => present ? { disableuser() },
   }
 
   user { "root":
@@ -41,7 +51,7 @@ class users {
   }
   
   k5login { '/root/.k5login':
-    principals => ["buckett/root@${krb-realm}","oucs0164/root@${krb-realm}"],
+    principals => ["buckett/root@${krb-realm}"],
     require => User['root'],
   }
 
