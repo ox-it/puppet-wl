@@ -2,13 +2,6 @@ class users {
   
   $krb-realm = "OX.AC.UK"
 
-  # Function to disable a user.
-  define disableuser() {
-      exec { "/usr/bin/passwd -l $name":
-        unless => "/usr/bin/passwd -S $name | grep '$name L'"
-      }
-  }
-
   # Users who can login and setup their k5login.
   # We assume people will have accounts that match their SSO name.
   define krb-user ($user = $title, $name) {
@@ -42,7 +35,7 @@ class users {
   user { 'oucs0164':
     name => 'Colin Hebert',
     shell => '/bin/false',
-    ensure => present ? { disableuser() },
+    password => '+',
   }
 
   user { "root":
