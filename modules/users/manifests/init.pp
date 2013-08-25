@@ -33,7 +33,7 @@ class users {
 
   # Disable Colin's account
   user { 'oucs0164':
-    name => 'Colin Hebert',
+    comment => 'Colin Hebert',
     shell => '/bin/false',
     password => '+',
   }
