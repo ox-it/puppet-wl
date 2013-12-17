@@ -45,7 +45,7 @@ class svc_jira {
     
     exec { "extract-db-driver":
         # The -j drops all folders, -o overwrite, and just extract the one file.
-        command => "/usr/bin/unzip -j  -o -d /var/cache/puppet/jira /tmp/mysql-connector-java-5.1.23.zip *mysql-connector-java-5.1.27-bin.jar",
+        command => "/usr/bin/unzip -j  -o -d /var/cache/puppet/jira /tmp/mysql-connector-java-5.1.27.zip *mysql-connector-java-5.1.27-bin.jar",
         creates =>"/var/cache/puppet/jira/mysql-connector-java-5.1.27-bin.jar",
         require => [
             Package["unzip"],
