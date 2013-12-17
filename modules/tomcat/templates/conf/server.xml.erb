@@ -24,6 +24,7 @@
     <% end %>
 	<% if ajp %>
     <Connector port="8<%= number -%>09" protocol="AJP/1.3"
+               URIEncoding="UTF-8"
     	address="127.0.0.1" redirectPort="443" />
     <% end %>
 
