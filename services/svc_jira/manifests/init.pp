@@ -63,7 +63,8 @@ class svc_jira {
         database_driver => "com.mysql.jdbc.Driver",
         database_driver_jar => "mysql-connector-java-5.1.27-bin.jar",
         database_driver_source => "file:///var/cache/puppet/jira/mysql-connector-java-5.1.27-bin.jar",
-        database_url => "jdbc:mysql://localhost/jiradb61",
+        # Ends up in an XML file so needs to be encoded.
+        database_url => "jdbc:mysql://localhost/jiradb61?useUnicode=true&amp;characterEncoding=UTF8&amp;sessionVariables=storage_engine=InnoDB",
         database_user => "jirauser",
         database_pass => $dbpass,
         number => $number, # the Tomcat http port will be 8280
