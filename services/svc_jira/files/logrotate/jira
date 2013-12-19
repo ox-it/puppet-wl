@@ -1,0 +1,11 @@
+# This rotates the Tomcat catalina.our
+# As we aren't using jsvc yet we need to use the risky copytruncate
+# A useful way to check this is doing what you expect is:
+# logrotate -vf /etc/logrotate.d/jira 
+/var/log/jira/catalina.out {
+        daily
+        copytruncate
+        rotate 14
+        missingok
+        compress
+}

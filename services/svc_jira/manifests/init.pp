@@ -79,6 +79,14 @@ class svc_jira {
                 Exec["extract-db-driver"]
         ]
     }
+    
+    # Log rotation
+    file { "/etc/logrotate.d/jira":
+        source => "puppet:///modules/svc_jira/logrotate/jira",
+        owner => root,
+        group => root,
+        mode => 644,
+    }
 
     # The Apache frontend.
     file { "/etc/apache2/sites-available/jira":
