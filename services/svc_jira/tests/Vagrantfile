@@ -1,10 +1,13 @@
-Vagrant::Config.run do |config|
+Vagrant.configure("2") do |config|
   config.vm.box = "precise64_oxford"
   config.vm.box_url = "http://users.ox.ac.uk/~wlteam/precise64_oxford.box"
 
-  config.vm.forward_port 8280, 8280
+  config.vm.network "forwarded_port", guest: 8280, host: 8280
+  config.vm.network "forwarded_port", host: 8080, guest: 80
   
-  config.vm.customize ["modifyvm", :id, "--memory", 1024]  
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--memory", 1024]  
+  end
   
   config.vm.provision :shell do |sh|
     sh.path = 'start.sh'
