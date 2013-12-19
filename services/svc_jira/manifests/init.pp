@@ -106,6 +106,10 @@ class svc_jira {
         group => root,
         mode => 0640,
     }
+    
+    apache2::site {"000-default":
+    	ensure => "absent",
+    }
 
     apache2::site { "jira": 
         require => [
