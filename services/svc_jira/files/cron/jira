@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# This cleans out old exports from jira, it only deletes files that are older than 20 days and not in the 20
+# most recent files.
+# This stops us deleting all our backups when the export stops working and removing backups from less than
+# 20 days ago when we do lots of backups on one day (eg upgrading or something)
+
+if [ -d /opt/jira/jira-home/export ] ; then
+  cd /opt/jira/jira-home/export
+  # ./ is needed on the ls so that they match
+  # -r Doesn't run if it's empty
+  # We ignore errors from ls as it might be there aren't any files yet
+  comm -12 <(ls -tr ./*.zip 2>/dev/null | head -n -20| sort) <(find . -mtime +20 -type f| sort) | xargs -r rm
+fi

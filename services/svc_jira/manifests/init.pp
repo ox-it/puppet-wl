@@ -87,6 +87,14 @@ class svc_jira {
         group => root,
         mode => 644,
     }
+    
+    # Backup cleanup
+    file { "/etc/cron.daily/jira":
+        source => "puppet:///modules/svc_jira/cron/jira",
+        owner => root,
+        group => root,
+        mode => 755,
+    }
 
     # The Apache frontend.
     file { "/etc/apache2/sites-available/jira":
