@@ -4,7 +4,8 @@
 class ssh {
 
   # Make the staff subnet and IP range in case of DNS problems.
-  $allowed-hosts = "LOCAL 129.67.100.0/255.255.252.0 .ox.ac.uk paper.bumph.org .eduroam.oxuni.org.uk"
+  # 212.159.26.200 is my home IP
+  $allowed-hosts = "LOCAL 129.67.100.0/255.255.252.0 .ox.ac.uk paper.bumph.org .eduroam.oxuni.org.uk 212.159.26.200"
   $denied-hosts = "ALL"
 
   # What's strange on debian is nothing seems to own /etc/hosts.{allow|deny}
