@@ -27,7 +27,9 @@ class ssh {
 
   exec { 'allow-ssh':
     path => "/bin:/usr/bin",
-    command => "sed -i -e '/^sshd:/d' -e '\$a\
+    # We have to use multiple commands as if the delete removes the last line
+    # the append then fails to work.
+    command => "sed -i -e '/^sshd:/d' /etc/hosts.allow && sed -i -e '\$a\
 sshd: ${allowed-hosts}
 ' /etc/hosts.allow",
     # -x Means we match the whole line so extra hosts can't be appended
@@ -37,7 +39,9 @@ sshd: ${allowed-hosts}
   
   exec { 'deny-ssh':
     path => "/bin:/usr/bin",
-    command => "sed -i -e '/^sshd:/d' -e '\$a\
+    # We have to use multiple commands as if the delete removes the last line
+    # the append then fails to work.
+    command => "sed -i -e '/^sshd:/d' /etc/hosts.deny && sed -i -e '\$a\
 sshd: ${denied-hosts}
 ' /etc/hosts.deny",
     # -x Means we match the whole line so extra hosts can't be appended
