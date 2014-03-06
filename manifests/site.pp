@@ -44,9 +44,6 @@ node 'chedder' inherits default {
         node_name         => 'chedder.oucs',
         scheduler_enabled => 1,
     }
-    users::krb-user { 'oucs0164':
-        name => 'Colin Hebert',
-    }
 }
 
 # Node which runs sonar
