@@ -1,0 +1,3 @@
+#!/bin/bash
+
+puppet apply --modulepath /etc/puppet/modules/:/etc/puppet/services/ /et    c/puppet/manifests/site.pp
