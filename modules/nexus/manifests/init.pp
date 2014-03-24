@@ -4,7 +4,7 @@ class nexus {
   include apache2
 
   $maven_repo_ip = "_default_" # Or $ipaddress
-  $version = "2.5.0-04"
+  $version = "2.7.2-03"
   $download = "nexus-${version}.war"
   $url = "http://download.sonatype.com/nexus/oss/${download}"
   $install_dir = "/var/lib/nexus"
@@ -15,6 +15,12 @@ class nexus {
 
   package { 'tomcat7' : 
     ensure => installed,
+    require => Package['openjdk-7'],
+  }
+  
+  package { 'openjdk-7':
+    ensure => installed,
+    name => 'openjdk-7-jre-headless',
   }
 
   # Disable the existing services
@@ -74,6 +80,7 @@ class nexus {
     ensure => directory,
     owner => tomcat7,
     mode => 644,
+    require => Package['tomcat7'],
   }
  
   # We have to have the WAR expanded and todo that it must be in the webapps folder
@@ -103,10 +110,15 @@ class nexus {
 
   exec { 'install-nexus':
     cwd => "/tmp",
-    require => Package['tomcat7'],
+    require => [ Package['curl'], Package['tomcat7'] ],
     # -C - continue where we left off
     # -L follow redirects
     command => "/usr/bin/curl -L -o ${download} ${url} && /bin/cp /tmp/${download} ${final}",
     creates => "${final}",
+    notify => [Exec['cleanout-webapp'], Service['tomcat7']],
+  }
+  
+  package { "curl":
+     ensure => "installed",
   }
 }
