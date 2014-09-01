@@ -4,7 +4,7 @@ class nexus {
   include apache2
 
   $maven_repo_ip = "_default_" # Or $ipaddress
-  $version = "2.7.2-03"
+  $version = "2.9.0-04"
   $download = "nexus-${version}.war"
   $url = "http://download.sonatype.com/nexus/oss/${download}"
   $install_dir = "/var/lib/nexus"
