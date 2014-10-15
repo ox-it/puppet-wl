@@ -35,6 +35,7 @@ class nexus {
 
   apache2::module { ['proxy', 'proxy_ajp', 'ssl']:
      ensure => 'present';
+     require => File['/etc/apache2/mods-available/ssl.conf'],
   }
 
   file { '/etc/apache2/sites-available/maven-repo':
