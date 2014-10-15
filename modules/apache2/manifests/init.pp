@@ -70,6 +70,16 @@ class apache2 {
       refreshonly => true,
    }
 
+   # Custom ssl.conf to disable SSLv3
+   file { "/etc/apache2/mods-available/ssl.conf":
+      source => "puppet:///modules/apache2/ssl.conf",
+      mode => 644,
+      owner => root,
+      group => root,
+      notify => Exec["force-reload-apache2"],
+      require => Package["apache2"],
+   }
+
    # We want to make sure that Apache2 is running.
    service { "apache2":
       ensure => running,

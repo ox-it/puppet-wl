@@ -148,6 +148,9 @@ class svc_jira {
 
     apache2::module { "ssl":
         ensure => "present",
+        require => [
+            File["/etc/apache2/mods-available/ssl.conf"],
+        ]
     }
         
 }
