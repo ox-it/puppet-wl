@@ -9,8 +9,8 @@ class tsm ($server_name, $server_address, $server_port,
     $node_name, $password = '', $domain = '/', $scheduler_enabled = 1){
 
   $repo_package = "oucs-hfs-repo"
-  $repo_url = "ftp://ftp.hfs.ox.ac.uk/repo/apt/deb/oucs-hfs-repo.deb"
-  $repo-file = "${repo-package}.deb"
+  $repo_url = "http://downloads.hfs.ox.ac.uk/repo/apt/pool/ox-hfs-repo_1.3.0-2_all.deb"
+  $repo_file = "${repo_package}.deb"
 
   if $scheduler_enabled == 1 {
     service { 'tsm-scheduler': 
