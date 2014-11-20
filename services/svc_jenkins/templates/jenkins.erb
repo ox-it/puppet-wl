@@ -38,13 +38,13 @@ JENKINS_LOG=/var/log/jenkins/$NAME.log
 MAXOPENFILES=8192
 
 # port for HTTP connector (default 8080; disable with -1)
-HTTP_PORT=<%= http_port %>
+HTTP_PORT=<%= @http_port %>
 
 # hostname for HTTP listener
 HTTP_HOST=localhost
 
 # port for AJP connector (disabled by default) 
-AJP_PORT=<%= ajp_port %>
+AJP_PORT=<%= @ajp_port %>
 
 # servlet context, important if you want to use apache proxying
 PREFIX=/jenkins 
