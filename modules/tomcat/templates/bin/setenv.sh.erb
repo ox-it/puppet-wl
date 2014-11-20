@@ -24,4 +24,4 @@ if [ -z "$JAVA_OPTS" ]; then
 	JAVA_OPTS="-Djava.awt.headless=true -Xmx128M"
 fi
 
-JAVA_OPTS="$JAVA_OPTS <%= java_opts -%>"
+JAVA_OPTS="$JAVA_OPTS <%= @java_opts %>"

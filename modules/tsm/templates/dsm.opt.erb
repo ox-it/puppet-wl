@@ -8,13 +8,13 @@
 * any filesystems used only for temporary files, for example /tmp and 
 * /var/tmp. Please do not include NFS-mounted filesystems in this list.
 
-Domain               <%= domain %>
+Domain               <%= @domain %>
 
 * The Servername in dsm.opt must match that of the server stanza in
 * dsm.sys. If it is not defined here, then the first server stanza
 * in dsm.sys is the default server.
 
-ServerName           <%= server_name %>
+ServerName           <%= @server_name %>
 
 * The following lines set up default values for various options. You 
 * should not change any of these unless you know what you are doing 

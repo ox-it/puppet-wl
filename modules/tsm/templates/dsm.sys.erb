@@ -9,14 +9,14 @@
 * these for you as well as the nodename below. If it failed
 * to do so, then they will be commented out.
 
-ServerName           <%= server_name %>
+ServerName           <%= @server_name %>
 CommMethod           TCPIP
-TcpServerAddress     <%= server_address %>
-TcpPort              <%= server_port %>
+TcpServerAddress     <%= @server_address %>
+TcpPort              <%= @server_port %>
 
 * The nodename identifies your computer to the TSM server.
 
-NodeName             <%= node_name %>
+NodeName             <%= @node_name %>
 
 * The SchedlogName line names a file to which reports from
 * scheduled backups will be appended. As below, this log file

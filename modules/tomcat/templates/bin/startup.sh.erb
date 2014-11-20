@@ -1,4 +1,4 @@
 #!/bin/sh
-export CATALINA_BASE=<%= webapp_base -%>/<%= username -%>/tomcat
+export CATALINA_BASE=<%= @webapp_base %>/<%= @username %>/tomcat
 /usr/share/tomcat6/bin/startup.sh
-echo "Tomcat started (<%= username -%>)"
+echo "Tomcat started (<%= @username %>)"

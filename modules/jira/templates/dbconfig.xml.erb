@@ -3,15 +3,15 @@
 <jira-database-config>
   <name>defaultDS</name>
   <delegator-name>default</delegator-name>
-  <database-type><%= database_type -%></database-type>
+  <database-type><%= @database_type %></database-type>
 <% if @database_schema %>  
-  <schema-name><%= database_schema -%></schema-name>
+  <schema-name><%= @database_schema %></schema-name>
 <% end %>
   <jdbc-datasource>
-    <url><%= database_url -%></url>
-    <driver-class><%= database_driver -%></driver-class>
-    <username><%= database_user -%></username>
-    <password><%= database_pass -%></password>
+    <url><%= @database_url %></url>
+    <driver-class><%= @database_driver %></driver-class>
+    <username><%= @database_user %></username>
+    <password><%= @database_pass %></password>
     <pool-min-size>10</pool-min-size>
     <pool-max-size>20</pool-max-size>
     <pool-max-wait>30000</pool-max-wait>
