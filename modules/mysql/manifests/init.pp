@@ -12,15 +12,14 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class mysql {
-	package { 'mysql' :
-			name => ['mysql-server', 'mysql-client'],
-			ensure => present,
+	package { 'mysql-server':
 	}
-
+	package { 'mysql-client':
+	}
 	service { 'mysql' :
 			ensure => running,
 			enable => true,
-			require => Package["mysql"],
+			require => Package['mysql-server', 'mysql-client'],
 	}
 	
 	# We do not want anyone looking at the backups
@@ -39,7 +38,7 @@ class mysql {
         mode => 0755,
         require => [
         	File['/var/backups/mysql'],
-        	Package['mysql'],
+        	Service['mysql'],
         ],
     }
     
