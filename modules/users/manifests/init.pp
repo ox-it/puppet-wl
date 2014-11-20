@@ -1,6 +1,6 @@
 class users {
   
-  $krb-realm = "OX.AC.UK"
+  $krb_realm = "OX.AC.UK"
 
   # Users who can login and setup their k5login.
   # We assume people will have accounts that match their SSO name.
@@ -8,7 +8,7 @@ class users {
 
       k5login { "/home/${user}/.k5login":
         ensure => present,
-        principals => ["${user}@${users::krb-realm}", "${user}/root@${users::krb-realm}"],
+        principals => ["${user}@${users::krb_realm}", "${user}/root@${users::krb_realm}"],
         require => User[$user],
       }
 
@@ -44,7 +44,7 @@ class users {
   }
   
   k5login { '/root/.k5login':
-    principals => ["buckett/root@${krb-realm}"],
+    principals => ["buckett/root@${krb_realm}"],
     require => User['root'],
   }
 
