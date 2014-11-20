@@ -97,8 +97,8 @@ class svc_jira {
     }
 
     # The Apache frontend.
-    file { "/etc/apache2/sites-available/jira":
-        content => template('svc_jira/apache/jira.erb'),
+    file { "/etc/apache2/sites-available/jira.conf":
+        content => template('svc_jira/apache/jira.conf.erb'),
         owner => root,
         group => root,
         mode => 0644,
@@ -130,7 +130,7 @@ class svc_jira {
 
     apache2::site { "jira": 
         require => [
-            File["/etc/apache2/sites-available/jira"],
+            File["/etc/apache2/sites-available/jira.conf"],
             File["/etc/ssl/certs/${hostname_virtual}.crt"],
             File["/etc/ssl/private/${hostname_virtual}.key"],
             File["/etc/ssl/certs/utn-ca-chain.crt.pem"],
