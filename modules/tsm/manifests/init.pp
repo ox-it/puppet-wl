@@ -8,8 +8,8 @@
 class tsm ($server_name, $server_address, $server_port,
     $node_name, $password = '', $domain = '/', $scheduler_enabled = 1){
 
-  $repo-package = "oucs-hfs-repo"
-  $repo-url = "ftp://ftp.hfs.ox.ac.uk/repo/apt/deb/oucs-hfs-repo.deb"
+  $repo_package = "oucs-hfs-repo"
+  $repo_url = "ftp://ftp.hfs.ox.ac.uk/repo/apt/deb/oucs-hfs-repo.deb"
   $repo-file = "${repo-package}.deb"
 
   if $scheduler_enabled == 1 {
@@ -34,8 +34,8 @@ class tsm ($server_name, $server_address, $server_port,
     cwd => "/tmp",
     # -C - continue where we left off
     # -L follow redirects
-    command => "/usr/bin/curl -C - -L -o ${repo-file} ${repo-url} && dpkg -i /tmp/${repo-file} && apt-get update",
-    unless => "/usr/bin/dpkg -l ${repo-package}"
+    command => "/usr/bin/curl -C - -L -o ${repo_file} ${repo_url} && dpkg -i /tmp/${repo_file} && apt-get update",
+    unless => "/usr/bin/dpkg -l ${repo_package}"
   }
 
     file { "/opt/tivoli/tsm/client/ba/bin/dsm.opt":
