@@ -46,6 +46,18 @@ node 'chedder' inherits default {
     }
 }
 
+# Node which runs jira.oucs.ox.ac.uk
+node 'wensleydale' inherits default {
+    include svc_jira
+    class { 'tsm':
+        server_name       => 'OX_HFS_B8',
+        server_address    => 'dsmb8.ox.ac.uk',
+        server_port       => '2500',
+        node_name         => 'wensleydale.oucs',
+        scheduler_enabled => 1,
+    }
+}
+
 # Node which runs sonar
 node 'perch' inherits default {
     include svc_sonar
