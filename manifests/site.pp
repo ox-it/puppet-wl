@@ -52,8 +52,8 @@ node 'wensleydale' inherits default {
     class { 'tsm':
         server_name       => 'OX_HFS_B8',
         server_address    => 'dsmb8.ox.ac.uk',
-        server_port       => '2500',
-        node_name         => 'wensleydale.oucs',
+        server_port       => '2800',
+        node_name         => 'wensleydale.it',
         scheduler_enabled => 1,
     }
 }
