@@ -16,3 +16,12 @@ To run this on a node use:
 to test a module on a node use:
 
    puppet apply --modulepath /etc/puppet/modules/:/etc/puppet/services/ -e "include users"
+
+HFS
+---
+
+Currently you have to set the password for a TSM client in the web interface.
+The puppet module just installs the software and configures it, no setting 
+of the password is done. To set the password login to the client and run
+`dsmc` you will get prompted to enter the password and then it will get saved
+on the client.
