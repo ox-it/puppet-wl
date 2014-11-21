@@ -24,7 +24,9 @@ LogLevel INFO
 
 # Authentication:
 LoginGraceTime 120
-PermitRootLogin yes
+# You need to use kerberos to login as root over network.
+# We don't disable root because it's how we setup the machine
+PermitRootLogin without-password
 StrictModes yes
 
 RSAAuthentication yes
