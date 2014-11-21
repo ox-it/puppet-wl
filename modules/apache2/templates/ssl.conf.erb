@@ -43,10 +43,12 @@ SSLPassPhraseDialog  exec:/usr/share/apache2/ask-for-passphrase
 SSLSessionCache        shmcb:${APACHE_RUN_DIR}/ssl_scache(512000)
 SSLSessionCacheTimeout  300
 
+<% if @lsbdistrelease == "12.04" %>
 #   Semaphore:
 #   Configure the path to the mutual exclusion semaphore the
 #   SSL engine uses internally for inter-process synchronization. 
 SSLMutex  file:${APACHE_RUN_DIR}/ssl_mutex
+<% end %>
 
 #   SSL Cipher Suite:
 #   List the ciphers that the client is permitted to negotiate.
