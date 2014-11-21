@@ -72,7 +72,7 @@ class apache2 {
 
    # Custom ssl.conf to disable SSLv3
    file { "/etc/apache2/mods-available/ssl.conf":
-      source => "puppet:///modules/apache2/ssl.conf",
+      content => template("apache2/ssl.conf.erb"),
       mode => 644,
       owner => root,
       group => root,
