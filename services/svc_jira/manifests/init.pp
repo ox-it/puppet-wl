@@ -22,7 +22,7 @@ class svc_jira {
         password => $dbpass,
     }
     mysql::db { 'jiradb':
-        name => 'jiradb61',
+        name => 'jiradb63',
         owner => 'jirauser'
     }
 
@@ -57,14 +57,14 @@ class svc_jira {
     # The jira setup
     class { "jira": 
         user => "jira", #the system user that will own the JIRA Tomcat instance
-        database_name => "jiradb61",
+        database_name => "jiradb63",
         database_type => "mysql",
         database_schema => "",
         database_driver => "com.mysql.jdbc.Driver",
         database_driver_jar => "mysql-connector-java-5.1.34-bin.jar",
         database_driver_source => "file:///var/cache/puppet/jira/mysql-connector-java-5.1.34-bin.jar",
         # Ends up in an XML file so needs to be encoded.
-        database_url => "jdbc:mysql://localhost/jiradb61?useUnicode=true&amp;characterEncoding=UTF8&amp;sessionVariables=storage_engine=InnoDB",
+        database_url => "jdbc:mysql://localhost/jiradb63?useUnicode=true&amp;characterEncoding=UTF8&amp;sessionVariables=storage_engine=InnoDB",
         database_user => "jirauser",
         database_pass => $dbpass,
         number => $number, # the Tomcat http port will be 8280
