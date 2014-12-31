@@ -4,7 +4,7 @@ class nexus {
   include apache2
 
   $maven_repo_ip = "_default_" # Or $ipaddress
-  $version = "2.9.0-04"
+  $version = "2.11.1-01"
   $download = "nexus-${version}.war"
   $url = "http://download.sonatype.com/nexus/oss/${download}"
   $install_dir = "/var/lib/nexus"
@@ -34,7 +34,7 @@ class nexus {
   }
 
   apache2::module { ['proxy', 'proxy_ajp', 'ssl']:
-     ensure => 'present';
+     ensure => 'present',
      require => File['/etc/apache2/mods-available/ssl.conf'],
   }
 
