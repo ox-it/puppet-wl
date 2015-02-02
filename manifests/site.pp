@@ -6,6 +6,11 @@ node default {
   include kerberos
   include ssmtp
   Exec { path => "/usr/bin:/usr/sbin/:/bin:/sbin" }
+
+  # Make sure we don't have puppet listening/running as it is by default in 14.04
+  service { 'puppet': 
+    ensure => 'stopped,
+  }
 }
 
 # Node which runs our copy of nexus

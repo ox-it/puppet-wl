@@ -1,0 +1,2 @@
+# Pull in our standard config
+CONFIG_FILE=/etc/rabbitmq/rabbitmq
