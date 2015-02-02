@@ -8,9 +8,11 @@ fi
 
 # Need to generate a public/private key
 # And make ourselves the CA
-mkdir -p /etc/rabbitmq
-openssl req -x509 -subj '/CN=localhost' -nodes -newkey rsa:2048 -keyout /etc/rabbitmq/key.pem -out /etc/rabbitmq/cert.pem -days 365
-cp /etc/rabbitmq/cert.pem /etc/rabbitmq/cacert.pem
+if [ ! -f /etc/rabbitmq/cert.pem -o ! -f /etc/rabbitmq/key.pem -o ! -f /etc/rabbitmq/cacert.pem ] ; then 
+  mkdir -p /etc/rabbitmq
+  openssl req -x509 -subj '/CN=localhost' -nodes -newkey rsa:2048 -keyout /etc/rabbitmq/key.pem -out /etc/rabbitmq/cert.pem -days 365
+  cp /etc/rabbitmq/cert.pem /etc/rabbitmq/cacert.pem
+fi
 
 
 if [ $(find /var/cache/apt -maxdepth 0 -mtime -24| wc -l) -eq 0 ]; then
