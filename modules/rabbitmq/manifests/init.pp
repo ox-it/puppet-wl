@@ -18,6 +18,7 @@ class rabbitmq {
   apt::key { '056E8E56':
     ensure => present,
     apt_key_url => 'https://www.rabbitmq.com/rabbitmq-signing-key-public.asc',
+    before => [ File['/etc/apt/sources.list.d/rabbitmq.list'] ],
   }
 
   exec { 'enable-management':
@@ -56,18 +57,21 @@ class rabbitmq {
     owner => root,
     group => rabbitmq,
     mode => 0640,
+    require => [ Package['rabbitmq'] ],
   }
 
   file { '/etc/rabbitmq/key.pem':
     owner => root,
     group => rabbitmq,
     mode => 0640,
+    require => [ Package['rabbitmq'] ],
   }
 
   file { '/etc/rabbitmq/cacert.pem':
     owner => root,
     group => rabbitmq,
     mode => 0640,
+    require => [ Package['rabbitmq'] ],
   }
 
   
