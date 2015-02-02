@@ -1,0 +1,6 @@
+[submodule "modules/logstash"]
+	path = modules/logstash
+	url = https://github.com/elasticsearch/puppet-logstash.git
+[submodule "modules/stdlib"]
+	path = modules/stdlib
+	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
