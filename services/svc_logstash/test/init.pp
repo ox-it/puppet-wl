@@ -1,0 +1,2 @@
+include svc_logstash
+
