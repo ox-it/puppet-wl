@@ -33,3 +33,8 @@ The private key for all TLS certificates is kept in another repository.
 Public keys and certificate chains can be kept in this repository. The ssl module
 can be used to setup permissions and copy across files. It also creates
 an openssl config file that can easily be used for generating CSRs.
+
+RabbitMQ
+--------
+
+This currently only runs on 14.04 and not on 12.04 as the old Ubuntu version doesn't have a new enough version of Erlang to support SSL.
