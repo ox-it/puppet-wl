@@ -1,2 +1,4 @@
-include svc_logstash
+class {'svc_logstash':
+  hostname_virtual => 'localhost',
+}
 

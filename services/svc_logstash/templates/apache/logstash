@@ -1,0 +1,75 @@
+<VirtualHost <%= @listen %>:80>
+        ServerAdmin matthew.buckett@it.ox.ac.uk
+        ServerName <%= @hostname_virtual %>
+
+        # Force all traffic through https
+        RewriteEngine On 
+        RewriteCond %{SERVER_PORT} 80 
+        RewriteRule ^(.*)$ https://<%= @hostname_virtual %>$1 [R,L]
+
+</VirtualHost>
+
+<IfModule ssl_module>
+<VirtualHost <%= @listen %>:443>
+
+    ServerName <%= @hostname_virtual %>
+
+    SSLEngine on
+    SSLCertificateFile      /etc/ssl/certs/<%= @hostname_virtual %>.crt
+    SSLCertificateKeyFile   /etc/ssl/private/<%= @hostname_virtual %>.key
+    #SSLCertificateChainFile /etc/ssl/certs/cybertrust-chain.pem
+    SSLCertificateChainFile /etc/ssl/certs/utn-ca-chain.crt.pem
+
+  DocumentRoot /var/www/kibana/
+  <Directory /var/www/kibana>
+    Allow from all
+    Options -Multiviews
+  </Directory>
+
+  <Location "/config.js">
+  
+  </Location>
+
+  # Set global proxy timeouts
+  <Proxy http://127.0.0.1:<%= @es_port %>>
+    ProxySet connectiontimeout=5 timeout=90
+  </Proxy>
+
+  ProxyPass /config.js !
+  # Optional disable auth for a src IP (eg: your monitoring host or subnet)
+ 
+  # Proxy for _aliases and .*/_search
+  <LocationMatch "^/(_nodes|_aliases|_search|.*/_search|_mapping|.*/_mapping)$">
+    ProxyPassMatch http://127.0.0.1:<%= @es_port %>/$1
+    ProxyPassReverse http://127.0.0.1:<%= @es_port %>/$1
+  </LocationMatch>
+
+  # Proxy for kibana-int/{dashboard,temp} stuff (if you don't want auth on /, then you will want these to be protected)
+  <LocationMatch "^/(kibana-int/dashboard/|kibana-int/temp)(.*)$">
+    ProxyPassMatch http://127.0.0.1:<%= @es_port %>/$1$2
+    ProxyPassReverse http://127.0.0.1:<%= @es_port %>/$1$2
+  </LocationMatch>
+
+  # Proxy for _aliases and .*/_search
+  <LocationMatch "^/elasticsearch/(.*)$">
+    ProxyPassMatch http://127.0.0.1:<%= @es_port %>/$1
+    ProxyPassReverse http://127.0.0.1:<%= @es_port %>/$1
+  </LocationMatch>
+
+
+  ProxyPass / http://127.0.0.1:9292/ retry=0 timeout=5
+  ProxyPassReverse / http://127.0.0.1:9292/
+
+  <Location />
+    Satisfy any
+    Allow from 127.0.0.1
+    Deny from all
+ 
+    AuthType WebAuth
+    require user buckett adamm 
+  </Location>
+ 
+
+
+</VirtualHost>
+</IfModule>
