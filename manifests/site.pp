@@ -41,6 +41,7 @@ node 'edam' inherits default {
 node 'chedder' inherits default {
     class { 'svc_jenkins':
         hostname_virtual => 'jenkins.oucs.ox.ac.uk',
+        hostname_alts => ['jenkins.it.ox.ac.uk'],
     }
     class { 'tsm':
         server_name       => 'OX_HFS_B2',
