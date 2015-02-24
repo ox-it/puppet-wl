@@ -42,15 +42,15 @@ class nexus {
     alts => ['maven-repo.it.ox.ac.uk'],
     public => "puppet:///modules/nexus/maven-repo.oucs.ox.ac.uk.crt",
     chain => "puppet:///modules/nexus/maven-repo.oucs.ox.ac.uk.chn",
+    notify => Service["apache2"],
   }
 
   file { '/etc/apache2/sites-available/maven-repo':
     content => template('nexus/maven-repo.erb'),
-    require => [ File['/etc/ssl/certs/utn-ca-chain.crt.pem', '/etc/ssl/certs/maven-repo.oucs.ox.ac.uk.crt'], Package['apache2'] ],
+    require => [ File['/etc/ssl/chain/maven-repo.oucs.ox.ac.uk.pem', '/etc/ssl/certs/maven-repo.oucs.ox.ac.uk.crt'], Package['apache2'] ],
   }
-  
   file { '/etc/ssl/certs/utn-ca-chain.crt.pem':
-    source => 'puppet:///modules/nexus/utn-ca-chain.crt.pem',
+    ensure => absent,
     owner => root,
     group => root,
     mode => 644,
