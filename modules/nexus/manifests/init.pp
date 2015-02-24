@@ -40,6 +40,8 @@ class nexus {
 
   ssl::cert { "maven-repo.oucs.ox.ac.uk":
     alts => ['maven-repo.it.ox.ac.uk'],
+    public => "puppet:///modules/nexus/maven-repo.oucs.ox.ac.uk.crt",
+    chain => "puppet:///modules/nexus/maven-repo.oucs.ox.ac.uk.chn",
   }
 
   file { '/etc/apache2/sites-available/maven-repo':

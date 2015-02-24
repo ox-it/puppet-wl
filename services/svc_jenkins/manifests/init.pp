@@ -30,13 +30,9 @@ class svc_jenkins (
 
     ssl::cert { "${hostname_virtual}":
         alts => $hostname_alts,
-    }
-
-    file { "/etc/ssl/certs/utn-ca-chain.crt.pem":
-        owner => root,
-        group => root,
-        mode => 0644,
-        source => "puppet:///modules/svc_jenkins/ssl/utn-ca-chain.crt.pem",
+        # These should really be passed in as they are specific to the deployment
+        public => "puppet:///modules/svc_jenkins/ssl/jenkins.oucs.ox.ac.uk.crt",
+        chain => "puppet:///modules/svc_jenkins/ssl/jenkins.oucs.ox.ac.uk.chn",
     }
 
     apache2::site { "jenkins": 
@@ -44,7 +40,7 @@ class svc_jenkins (
             File["/etc/apache2/sites-available/jenkins"],
             File["/etc/ssl/certs/${hostname_virtual}.crt"],
             File["/etc/ssl/private/${hostname_virtual}.key"],
-            File["/etc/ssl/certs/utn-ca-chain.crt.pem"],
+            File["/etc/ssl/chain/${hostname_virtual}.pem"],
             Class["jenkins"],
         ]
     }
