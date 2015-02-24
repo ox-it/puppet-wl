@@ -38,6 +38,10 @@ class nexus {
      require => File['/etc/apache2/mods-available/ssl.conf'],
   }
 
+  ssl::cert { "maven-repo.oucs.ox.ac.uk":
+    alts => ['maven-repo.it.ox.ac.uk'],
+  }
+
   file { '/etc/apache2/sites-available/maven-repo':
     content => template('nexus/maven-repo.erb'),
     require => [ File['/etc/ssl/certs/utn-ca-chain.crt.pem', '/etc/ssl/certs/maven-repo.oucs.ox.ac.uk.crt'], Package['apache2'] ],
@@ -49,13 +53,6 @@ class nexus {
     group => root,
     mode => 644,
   }
-
-  file { '/etc/ssl/certs/maven-repo.oucs.ox.ac.uk.crt':
-     source => 'puppet:///modules/nexus/maven-repo.oucs.ox.ac.uk.crt',
-     owner => root,
-     group => root,
-     mode => 644,
-   }
 
   service { 'tomcat7':
     require => Package['tomcat7'],
