@@ -4,6 +4,7 @@ class svc_jenkins (
     $listen = '*',
     $http_port = 8080,
     $ajp_port = -1,
+    $hostname_alts,
     ){
 
     include jenkins
@@ -25,6 +26,13 @@ class svc_jenkins (
         group => root,
         mode => 0644,
         require => Class["jenkins"],
+    }
+
+    file { "/etc/ssl/$hostname_virtual.crt":
+        content => template('svc_jenkins/ssl/cert.erb'),
+        owner => root,
+        group => root,
+        mode => 0644,
     }
 
     file { "/etc/ssl/certs/${hostname_virtual}.crt":
