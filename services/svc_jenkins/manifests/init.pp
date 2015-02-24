@@ -28,17 +28,8 @@ class svc_jenkins (
         require => Class["jenkins"],
     }
 
-    file { "/etc/ssl/$hostname_virtual.crt":
-        content => template('svc_jenkins/ssl/cert.erb'),
-        owner => root,
-        group => root,
-        mode => 0644,
-    }
-
-    file { "/etc/ssl/certs/${hostname_virtual}.crt":
-        owner => root,
-        group => root,
-        mode => 0644,
+    ssl::cert { "${hostname_virtual}":
+        alts => $hostname_alts,
     }
 
     file { "/etc/ssl/certs/utn-ca-chain.crt.pem":
@@ -46,12 +37,6 @@ class svc_jenkins (
         group => root,
         mode => 0644,
         source => "puppet:///modules/svc_jenkins/ssl/utn-ca-chain.crt.pem",
-    }
-
-    file { "/etc/ssl/private/${hostname_virtual}.key":
-        owner => root,
-        group => root,
-        mode => 0640,
     }
 
     apache2::site { "jenkins": 

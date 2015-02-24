@@ -1,26 +1,28 @@
 # To generate a new CSR
-# openssl req -config <%= @hostname_virtual %>.cnf -key private/<%= @hostname_virtual %>.key  -new
+# openssl req -config <%= @name %>.cnf -key private/<%= @name %>.key  -new
 [ req ]
         prompt                 = no
         default_bits           = 2048
         default_md             = sha256
         distinguished_name     = dn
+<% if @alts %>
         req_extensions         = v3_req
+<% end %>
 [ dn ]
         C                      = GB
         ST                     = Oxfordshire
         L                      = Oxford
         O                      = University of Oxford
         OU                     = IT Services
-        CN                     = <%= @hostname_virtual %>
-<% if @hostname_alts %>
+        CN                     = <%= @name %>
+<% if @alts %>
 [ v3_req ]
         subjectAltName         = @alt_names
         basicConstraints       = CA:FALSE
 [alt_names]
-        DNS.1                  = <%= @hostname_virtual %>
-<% @hostname_alts.each_with_index do |hostname_alt, index| -%>
-        DNS.<%= index + 2 %>                  = <%= hostname_alt %>
+        DNS.1                  = <%= @name %>
+<% @alts.each_with_index do |alt, index| -%>
+        DNS.<%= index + 2 %>                  = <%= alt %>
 <% end -%>
 <% end %>
 
