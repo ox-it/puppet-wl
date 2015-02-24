@@ -1,7 +1,7 @@
 class ssl {
 
   define cert ( $alts ) {
-    file { "/etc/ssl/${name}.crt":
+    file { "/etc/ssl/${name}.cnf":
         content => template('ssl/cert.erb'),
         owner => root,
         group => root,
