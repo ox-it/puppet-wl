@@ -9,7 +9,7 @@ node default {
 
   # Make sure we don't have puppet listening/running as it is by default in 14.04
   service { 'puppet': 
-    ensure => 'stopped,
+    ensure => 'stopped',
   }
 }
 
