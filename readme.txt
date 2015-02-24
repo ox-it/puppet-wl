@@ -25,3 +25,11 @@ The puppet module just installs the software and configures it, no setting
 of the password is done. To set the password login to the client and run
 `dsmc` you will get prompted to enter the password and then it will get saved
 on the client.
+
+TLS Certificates
+----------------
+
+The private key for all TLS certificates is kept in another repository.
+Public keys and certificate chains can be kept in this repository. The ssl module
+can be used to setup permissions and copy across files. It also creates
+an openssl config file that can easily be used for generating CSRs.
