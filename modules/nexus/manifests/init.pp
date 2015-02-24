@@ -48,6 +48,7 @@ class nexus {
   file { '/etc/apache2/sites-available/maven-repo':
     content => template('nexus/maven-repo.erb'),
     require => [ File['/etc/ssl/chain/maven-repo.oucs.ox.ac.uk.pem', '/etc/ssl/certs/maven-repo.oucs.ox.ac.uk.crt'], Package['apache2'] ],
+    notify => Service["apache2"],
   }
   file { '/etc/ssl/certs/utn-ca-chain.crt.pem':
     ensure => absent,
