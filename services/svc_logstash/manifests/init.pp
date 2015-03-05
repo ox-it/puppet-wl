@@ -41,7 +41,7 @@ class svc_logstash (
     group => root,
     mode => 0644,
     source => 'puppet:///modules/svc_logstash/lo3.cfg',
-    notify => Exec['ifup elaticsearch'],
+    notify => Exec['ifup elasticsearch'],
   }
 
   file {'/etc/network/interfaces.d/lo4.cfg':
