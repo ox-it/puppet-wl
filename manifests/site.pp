@@ -25,9 +25,11 @@ node 'feta' inherits default {
   }
 }
 
-# Node which runs jira.oucs.ox.ac.uk
+# Node which runs edam.oucs.ox.ac.uk
 node 'edam' inherits default {
-    include svc_jira
+    class{ 'svc_logstash':
+      hostname_virtual => 'edam.oucs.ox.ac.uk',
+    }
     class { 'tsm':
         server_name       => 'OX_HFS_B2',
         server_address    => 'dsmb2.ox.ac.uk',
