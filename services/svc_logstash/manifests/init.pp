@@ -115,7 +115,7 @@ class svc_logstash (
     group => root,
     mode => 0644,
     require => Package["apache2"], 
-  } ->
+  }
 
   class { 'rabbitmq':
   } ->
