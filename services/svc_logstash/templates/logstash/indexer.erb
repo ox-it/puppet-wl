@@ -1,0 +1,19 @@
+input {
+	rabbitmq {
+		port => 5671
+		ssl => true
+		host => localhost
+		user => "<%= @rabbitmq_username %>"
+		password => "<%= @rabbitmq_password %>"
+		queue => "logstash"
+	}
+}
+
+# Add your filters here
+
+output {
+	elasticsearch { 
+		#protocol => "http"
+		bind_host => "logstash"
+	}
+}
