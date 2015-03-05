@@ -86,6 +86,26 @@ class svc_logstash (
     notify => [ Exec['apt-update'] ],
   } ->
 
+  apache2::module {'rewrite':
+    ensure => present,
+  } ->
+
+  apache2::module {'proxy':
+    ensure => present,
+  } ->
+
+  apache2::module {'proxy_http':
+    ensure => present,
+  } ->
+
+  apache2::module {'ssl':
+    ensure => present,
+  } ->
+
+  apache2::module { "webauth":
+    ensure => "present",
+    require => Package["webauth"],
+  } ->
 
   file {'/etc/apache2/sites-available/logstash':
     content => template('svc_logstash/apache/logstash.erb'),
@@ -101,16 +121,6 @@ class svc_logstash (
     require => File["/etc/apache2/mods-available/ssl.conf"],
   } 
   
-#  apache2::module { "webauth":
-#    ensure => "present",
-#    require => Package["webauth"],
-#  } ->
-#
-#  package { 'webauth':
-#    name => "libapache2-webauth",
-#    ensure => "present"
-#  }
-
   class { 'rabbitmq':
   } ->
 
@@ -198,8 +208,10 @@ class svc_logstash (
     require => Exec['unpack-kibana'],
   }
 
-  
+  package { 'webauth':
+    name => "libapache2-webauth",
+    ensure => "present"
+  }
 
-  
 
 }
