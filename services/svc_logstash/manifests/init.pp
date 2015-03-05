@@ -33,7 +33,7 @@ class svc_logstash (
     group => root,
     mode => 0644,
     source => 'puppet:///modules/svc_logstash/lo2.cfg',
-    notify => Exec['ifup lo:2'],
+    notify => Exec['ifup logstash'],
   }
 
   file {'/etc/network/interfaces.d/lo3.cfg':
@@ -41,7 +41,7 @@ class svc_logstash (
     group => root,
     mode => 0644,
     source => 'puppet:///modules/svc_logstash/lo3.cfg',
-    notify => Exec['ifup lo:3'],
+    notify => Exec['ifup elaticsearch'],
   }
 
   file {'/etc/network/interfaces.d/lo4.cfg':
@@ -49,7 +49,7 @@ class svc_logstash (
     group => root,
     mode => 0644,
     source => 'puppet:///modules/svc_logstash/lo4.cfg',
-    notify => Exec['ifup lo:4'],
+    notify => Exec['ifup kibana'],
   }
 
 
