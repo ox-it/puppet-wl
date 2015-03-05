@@ -17,7 +17,7 @@ class svc_logstash (
     refreshonly => true,
   }
     
-  exec {'ifup logstash':
+  exec {'ifup elasticsearch':
     command => '/sbin/ifup lo:3',
     refreshonly => true,
   }
