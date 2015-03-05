@@ -1,6 +1,6 @@
 # Class: mysql
 #
-# This module manages postgres
+# This module manages mysql
 #
 # Parameters:
 #
