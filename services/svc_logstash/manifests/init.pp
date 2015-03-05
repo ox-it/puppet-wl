@@ -22,6 +22,11 @@ class svc_logstash (
     refreshonly => true,
   }
     
+  exec {'ifup lo:4':
+    command => '/sbin/ifup lo:4',
+    refreshonly => true,
+  }
+    
 
   file {'/etc/network/interfaces.d/lo2.cfg':
     owner => root,
@@ -39,6 +44,14 @@ class svc_logstash (
     notify => Exec['ifup lo:3'],
   }
 
+  file {'/etc/network/interfaces.d/lo4.cfg':
+    owner => root,
+    group => root,
+    mode => 0644,
+    source => 'puppet:///modules/svc_logstash/lo4.cfg',
+    notify => Exec['ifup lo:4'],
+  }
+
 
   host {'logstash':
     ip => '127.0.0.2',
@@ -48,7 +61,9 @@ class svc_logstash (
    ip => '127.0.0.3',
   }
 
-  
+  host {'kibana':
+   ip => '127.0.0.4',
+  }
 
   apt::key {'D88E42B4':
     ensure => present,
@@ -119,5 +134,72 @@ class svc_logstash (
   logstash::configfile { 'indexer':
     content => template('svc_logstash/logstash/indexer.erb'),
   }
+
+  file {'/opt':
+    ensure => 'directory',
+    owner => root,
+    group => root,
+    mode => 0755,
+  } ->
+  
+  file {'/opt/kibana':
+    ensure => 'directory',
+    owner => root,
+    group => root,
+    mode => 0755,
+  } ->
+  
+  file {'/var/cache/puppet':
+    ensure => 'directory',
+    owner => root,
+    group => root,
+    mode => 0755,
+  } ->
+
+  exec {'download-kibana':
+    command => '/usr/bin/curl -o /var/cache/puppet/kibana-4.0.1-linux-x64.tar.gz https://download.elasticsearch.org/kibana/kibana/kibana-4.0.1-linux-x64.tar.gz',
+    creates => '/var/cache/puppet/kibana-4.0.1-linux-x64.tar.gz',
+  } ~>
+
+  exec {'unpack-kibana':
+    command => '/bin/tar --strip-components=1 -zxf /var/cache/puppet/kibana-4.0.1-linux-x64.tar.gz',
+    cwd => '/opt/kibana',
+    refreshonly => true,
+    notify => Service['kibana'],
+  }
+ 
+  group {'kibana':
+    system => true,
+    ensure => present,
+  } ->
+
+  user {'kibana':
+    system => true,
+    ensure => present,
+    gid => 'kibana',
+  } ->
+
+  file {'/etc/init/kibana.conf':
+    source => 'puppet:///modules/svc_logstash/kibana.conf',
+    owner => root,
+    group => root,
+    mode => 0644,
+  } ->
+
+  file {'/var/log/kibana':
+    ensure => 'directory',
+    owner => 'kibana',
+    group => 'adm',
+    mode => 0755,
+  } ->
+
+  service {'kibana':
+    ensure => running,
+    require => Exec['unpack-kibana'],
+  }
+
+  
+
+  
 
 }
