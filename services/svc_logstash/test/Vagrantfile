@@ -19,6 +19,8 @@ Vagrant::Config.run do |config|
   config.vm.forward_port 5672, 5672
   config.vm.forward_port 9300, 9300
   config.vm.forward_port 9200, 9200
+  config.vm.forward_port 80, 2080
+  config.vm.forward_port 443, 2443
   
 
   # Boot with a GUI so you can see the screen. (Default is headless)
