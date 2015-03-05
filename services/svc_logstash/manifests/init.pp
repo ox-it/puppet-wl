@@ -12,17 +12,17 @@ class svc_logstash (
   $rabbitmq_username = "logstash"
   $rabbitmq_password = sha1("${fqdn}${secrets::secret}rabbitmq")
 
-  exec {'ifup lo:2':
+  exec {'ifup logstash':
     command => '/sbin/ifup lo:2',
     refreshonly => true,
   }
     
-  exec {'ifup lo:3':
+  exec {'ifup logstash':
     command => '/sbin/ifup lo:3',
     refreshonly => true,
   }
     
-  exec {'ifup lo:4':
+  exec {'ifup kibana':
     command => '/sbin/ifup lo:4',
     refreshonly => true,
   }
@@ -124,6 +124,7 @@ class svc_logstash (
   } ->
 
   class { 'elasticsearch':
+   require => Exec['ifup elasticsearch'],
   } ->
 
   elasticsearch::instance { 'logstash':
@@ -134,6 +135,7 @@ class svc_logstash (
 
   class {'logstash': 
     java_install => true,
+    require => Exec['ifup logstash'],
   }
 
   logstash::configfile { 'indexer':
@@ -200,7 +202,7 @@ class svc_logstash (
 
   service {'kibana':
     ensure => running,
-    require => Exec['unpack-kibana'],
+    require => [Exec['unpack-kibana'],Exec['ifup kibana']]
   }
 
   package { 'webauth':
