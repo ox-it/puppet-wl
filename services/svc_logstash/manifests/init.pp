@@ -98,9 +98,11 @@ class svc_logstash (
     ensure => present,
   } ->
 
-  apache2::module {'ssl':
-    ensure => present,
-  } ->
+  apache2::module { "ssl":
+    ensure => "present",
+    # Our custom SSL config
+    require => File["/etc/apache2/mods-available/ssl.conf"],
+  } 
 
   apache2::module { "webauth":
     ensure => "present",
@@ -115,12 +117,6 @@ class svc_logstash (
     require => Package["apache2"], 
   } ->
 
-  apache2::module { "ssl":
-    ensure => "present",
-    # Our custom SSL config
-    require => File["/etc/apache2/mods-available/ssl.conf"],
-  } 
-  
   class { 'rabbitmq':
   } ->
 
