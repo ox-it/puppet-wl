@@ -110,12 +110,17 @@ class svc_logstash (
     require => Package["webauth"],
   } ->
 
-  file {'/etc/apache2/sites-available/logstash':
+  file {'/etc/apache2/sites-available/logstash.conf':
     content => template('svc_logstash/apache/logstash.erb'),
     owner => root,
     group => root,
     mode => 0644,
+  } ->
+
+  apache2::site {"logstash":
+    ensure => present,
   }
+
 
   class { 'rabbitmq':
   } ->
