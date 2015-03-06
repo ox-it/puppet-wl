@@ -17,13 +17,14 @@
     SSLEngine on
     SSLCertificateFile      /etc/ssl/certs/<%= @hostname_virtual %>.crt
     SSLCertificateKeyFile   /etc/ssl/private/<%= @hostname_virtual %>.key
-    #SSLCertificateChainFile /etc/ssl/certs/cybertrust-chain.pem
     SSLCertificateChainFile /etc/ssl/certs/utn-ca-chain.crt.pem
 
   # Set global proxy timeouts
   ProxyPass / http://kibana:5601/ retry=0 timeout=5
   ProxyPassReverse / http://kibana:5601/
 
+  # Only enable webauth if enabled
+  <IfModule webauth_module>
   <Location />
     Satisfy any
     Allow from 127.0.0.1
@@ -32,6 +33,7 @@
     AuthType WebAuth
     require user buckett adamm ouit0196
   </Location>
+  </IfModule>
  
 
 
