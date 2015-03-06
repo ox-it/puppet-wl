@@ -118,6 +118,7 @@ class svc_logstash (
   } ->
 
   ssl::cert { $hostname_virtual:
+    public => "puppet:///modules/svc_logstash/${hostname_virtual}.crt",
   } ->
 
   apache2::site {"logstash":
