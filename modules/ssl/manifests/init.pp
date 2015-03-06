@@ -1,6 +1,6 @@
 class ssl {
 
-  define cert ( $alts , $public = undef, $chain = undef ) {
+  define cert ( $alts = undef, $public = undef, $chain = undef ) {
     file { "/etc/ssl/${name}.cnf":
         content => template('ssl/cert.erb'),
         owner => root,
