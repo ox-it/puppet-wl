@@ -2,6 +2,7 @@ class svc_logstash (
     $hostname_virtual,
     $listen = '*',
     $es_port = "9200",
+    $webauth = "enabled",
   ){
 
   include apache2
@@ -105,7 +106,7 @@ class svc_logstash (
   } 
 
   apache2::module { "webauth":
-    ensure => "present",
+    ensure => $webauth,
     require => Package["webauth"],
   } ->
 
