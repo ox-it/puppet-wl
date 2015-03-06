@@ -9,6 +9,13 @@
 
 </VirtualHost>
 
+<IfModule webauth_module>
+# WebAuth configuration for Oxford.
+WebAuthLoginURL https://webauth.ox.ac.uk/login
+WebAuthWebKdcURL https://webauth.ox.ac.uk/webkdc-service/
+WebAuthWebKdcPrincipal service/webkdc@OX.AC.UK
+</IfModule>
+
 <IfModule ssl_module>
 <VirtualHost <%= @listen %>:443>
 
