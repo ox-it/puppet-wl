@@ -80,6 +80,16 @@ class apache2 {
       require => Package["apache2"],
    }
 
+   # Although not always needed doesn't hurt to drop the Oxford WebAuth config in.
+   file { "/etc/apache2/mods-available/webauth.conf":
+      source => 'puppet:///modules/apache2/webauth.conf',
+      mode => 0644,
+      owner => root,
+      group => root,
+      notify => Exec["force-reload-apache2"],
+      require => Package["apache2"],
+   }
+
    # We want to make sure that Apache2 is running.
    service { "apache2":
       ensure => running,
@@ -87,6 +97,7 @@ class apache2 {
       hasrestart => true,
       require => Package["apache2"],
    }
+
    package { "apache2":
       ensure => present,
    }
