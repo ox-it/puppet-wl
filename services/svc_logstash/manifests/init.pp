@@ -130,14 +130,14 @@ class svc_logstash (
   } ->
 
   class { 'elasticsearch':
-   require => Exec['ifup elasticsearch'],
   } ->
 
   elasticsearch::instance { 'logstash':
     config => {
       'network.host' => 'elasticsearch'
     },
-  } ->
+    require => Exec['ifup elasticsearch'],
+  } 
 
   class {'logstash': 
     java_install => true,
