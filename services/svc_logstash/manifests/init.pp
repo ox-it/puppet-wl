@@ -2,7 +2,7 @@ class svc_logstash (
     $hostname_virtual,
     $listen = '*',
     $es_port = "9200",
-    $webauth = "enabled",
+    $webauth = "present",
   ){
 
   include apache2
