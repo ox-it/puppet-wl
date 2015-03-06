@@ -117,6 +117,9 @@ class svc_logstash (
     mode => 0644,
   } ->
 
+  ssl::cert { $hostname_virtual:
+  } ->
+
   apache2::site {"logstash":
     ensure => present,
   }
