@@ -17,7 +17,7 @@
     SSLEngine on
     SSLCertificateFile      /etc/ssl/certs/<%= @hostname_virtual %>.crt
     SSLCertificateKeyFile   /etc/ssl/private/<%= @hostname_virtual %>.key
-    SSLCertificateChainFile /etc/ssl/certs/utn-ca-chain.crt.pem
+    SSLCertificateChainFile /etc/ssl/chain/<%= @hostname_virtual %>.pem
 
   # Set global proxy timeouts
   ProxyPass / http://kibana:5601/ retry=0 timeout=5
