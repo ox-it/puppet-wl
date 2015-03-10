@@ -119,8 +119,24 @@ class svc_logstash (
 
   ssl::cert { $hostname_virtual:
     public => "puppet:///modules/svc_logstash/${hostname_virtual}.crt",
-    chain => "puppet:///modules/svc_logstash/utn-ca-chain.crt.pem",
+    chain => "puppet:///modules/svc_logstash/swiss-sign-chain.crt.pem",
   } ->
+
+  exec { "link-private":
+    command => "/bin/ln /etc/ssl/private/${hostname_virtual}.key /etc/rabbitmq/key.pem",
+    creates => "/etc/rabbitmq/key.pem",
+  } ->
+
+  exec { "link-public":
+    command => "/bin/ln /etc/ssl/certs/${hostname_virtual}.crt /etc/rabbitmq/cert.pem",
+    creates => "/etc/rabbitmq/cert.pem",
+  } ->
+
+  exec { "link-chain":
+    command => "/bin/ln /etc/ssl/chain/${hostname_virtual}.pem /etc/rabbitmq/cacert.pem",
+    creates => "/etc/rabbitmq/cacert.pem",
+  } ->
+
 
   apache2::site {"logstash":
     ensure => present,
