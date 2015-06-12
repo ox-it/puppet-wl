@@ -54,21 +54,21 @@ class rabbitmq {
   }
 
   file { '/etc/rabbitmq/cert.pem':
-    owner => root,
+    owner => rabbitmq,
     group => rabbitmq,
     mode => 0640,
     require => [ Package['rabbitmq'] ],
   }
 
   file { '/etc/rabbitmq/key.pem':
-    owner => root,
+    owner => rabbitmq,
     group => rabbitmq,
     mode => 0640,
     require => [ Package['rabbitmq'] ],
   }
 
   file { '/etc/rabbitmq/cacert.pem':
-    owner => root,
+    owner => rabbitmq,
     group => rabbitmq,
     mode => 0640,
     require => [ Package['rabbitmq'] ],
