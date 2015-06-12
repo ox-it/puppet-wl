@@ -38,13 +38,17 @@ class users {
     password => '+',
   }
 
+  krb-user { 'ouit0196':
+    name => 'Nick Wilson',
+  }
+
   user { "root":
     ensure => present,
     home => '/root',
   }
   
   k5login { '/root/.k5login':
-    principals => ["buckett/root@${krb_realm}"],
+    principals => ["buckett/root@${krb_realm}", "ouit0196/root@${krb_realm}"],
     require => User['root'],
   }
 
