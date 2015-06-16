@@ -38,3 +38,10 @@ RabbitMQ
 --------
 
 This currently only runs on 14.04 and not on 12.04 as the old Ubuntu version doesn't have a new enough version of Erlang to support SSL.
+
+ElasticSearch, Logstash, Kibana
+-------------------------------
+
+These are all setup to run on thier own loopback interfaces, this makes choosing ports easy and sensible as well as allowing multicast.
+However if you let them all run on IPv6 things break so both logstash and elasticsearch should be told to prefer IPv4 instead.
+https://jira.spring.io/browse/SGF-28
