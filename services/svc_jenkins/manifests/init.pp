@@ -10,6 +10,14 @@ class svc_jenkins (
     include jenkins
     include apache2
 
+    # Docker cleanup
+    file { "/etc/cron.daily/docker":
+        content => "puppet:///modules/svc_jenkins/docker",
+	owner => root,
+	group => root,
+	mode => 0755,
+    }
+
 
     # The Apache frontend.
     file { "/etc/apache2/sites-available/jenkins":
