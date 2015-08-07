@@ -1,4 +1,7 @@
-include svc_jira
+class{ 'svc_jira':
+      hostname_virtual => 'jira.oucs.ox.ac.uk',
+}
+
 
 $location = "Oxfordshire"
 $country = "GB"
@@ -13,5 +16,5 @@ $createcertificate = "/usr/bin/openssl req -new -newkey rsa:2048 -x509 -days 365
 exec { "openssl-csr":
   command => $createcertificate,
   cwd => '/etc/ssl/',
-  creates => ["/etc/ssl/private/${commonname}.key", "/etc/ssl/certs/${commonname}.key"],
+  creates => ["/etc/ssl/private/${commonname}.key", "/etc/ssl/certs/${commonname}.crt"],
 }

@@ -1,5 +1,9 @@
 # The Jira Service, frontended by Apache
-class svc_jira {
+class svc_jira (
+	$hostname_virtual,
+	$listen = '*',
+	$hostname_alts = undef,
+	){
 	include apt
     include mysql
     include tomcat
@@ -7,10 +11,8 @@ class svc_jira {
     include secrets
 
     # All these should be passed in.
-    $hostname_virtual = "jira.oucs.ox.ac.uk"
     $context = "jira"
     $number = 0
-    $listen = '*'
 
 
     $dbpass = sha1("${fqdn}${secrets::secret}jirauser")
@@ -24,6 +26,13 @@ class svc_jira {
     mysql::db { 'jiradb':
         name => 'jiradb63',
         owner => 'jirauser'
+    }
+    
+     ssl::cert { "${hostname_virtual}":
+        alts => $hostname_alts,
+        public => "puppet:///modules/svc_jira/ssl/${hostname_virtual}.crt",
+        chain => "puppet:///modules/svc_jira/ssl/utn-ca-chain.crt.pem",
+        notify => Service["apache2"],
     }
 
     # download extra libraries needed by JIRA
@@ -104,25 +113,6 @@ class svc_jira {
         mode => 0644,
         require => Package["apache2"],
     }
-
-    file { "/etc/ssl/certs/${hostname_virtual}.crt":
-        owner => root,
-        group => root,
-        mode => 0644,
-    }
-
-    file { "/etc/ssl/certs/utn-ca-chain.crt.pem":
-        owner => root,
-        group => root,
-        mode => 0644,
-        source => "puppet:///modules/svc_jira/ssl/utn-ca-chain.crt.pem",
-    }
-
-    file { "/etc/ssl/private/${hostname_virtual}.key":
-        owner => root,
-        group => root,
-        mode => 0640,
-    }
     
     apache2::site {"000-default":
     	ensure => "absent",
@@ -130,10 +120,8 @@ class svc_jira {
 
     apache2::site { "jira": 
         require => [
+        	Ssl::Cert["${hostname_virtual}"],
             File["/etc/apache2/sites-available/jira.conf"],
-            File["/etc/ssl/certs/${hostname_virtual}.crt"],
-            File["/etc/ssl/private/${hostname_virtual}.key"],
-            File["/etc/ssl/certs/utn-ca-chain.crt.pem"],
             Class["jira"],
         ]
     }
