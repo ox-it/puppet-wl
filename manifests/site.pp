@@ -56,7 +56,10 @@ node 'chedder' inherits default {
 
 # Node which runs jira.oucs.ox.ac.uk
 node 'wensleydale' inherits default {
-    include svc_jira
+    class { 'svc_jira':
+        hostname_virtual => 'jira.oucs.ox.ac.uk',
+        hostname_alts => ['jira.it.ox.ac.uk'],
+    }
     class { 'tsm':
         server_name       => 'OX_HFS_B8',
         server_address    => 'dsmb8.ox.ac.uk',
