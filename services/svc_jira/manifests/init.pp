@@ -31,7 +31,7 @@ class svc_jira (
      ssl::cert { "${hostname_virtual}":
         alts => $hostname_alts,
         public => "puppet:///modules/svc_jira/ssl/${hostname_virtual}.crt",
-        chain => "puppet:///modules/svc_jira/ssl/utn-ca-chain.crt.pem",
+        chain => "puppet:///modules/svc_jira/ssl/${hostname_virtual}.chain",
         notify => Service["apache2"],
     }
 
@@ -120,7 +120,7 @@ class svc_jira (
 
     apache2::site { "jira": 
         require => [
-        	Ssl::Cert["${hostname_virtual}"],
+            Ssl::Cert["${hostname_virtual}"],
             File["/etc/apache2/sites-available/jira.conf"],
             Class["jira"],
         ]
