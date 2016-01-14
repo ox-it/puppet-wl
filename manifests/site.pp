@@ -69,9 +69,8 @@ node 'wensleydale' inherits default {
     }
 }
 
-# Node which runs sonar
+# Node which does VSO builds
 node 'perch' inherits default {
-    include svc_sonar
 }
 
 # Bits and bobs node.
