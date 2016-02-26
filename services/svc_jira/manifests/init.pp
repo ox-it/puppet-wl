@@ -77,8 +77,8 @@ class svc_jira (
         database_user => "jirauser",
         database_pass => $dbpass,
         number => $number, # the Tomcat http port will be 8280
-        version => "6.3.10", # the JIRA version
-        jira_jars_version => "6.3",
+        version => "7.0.10", # the JIRA version
+        jira_jars_version => "7.0",
         contextroot => "jira",
         webapp_base => "/opt", # JIRA will be installed in /opt/jira
         http => false,
