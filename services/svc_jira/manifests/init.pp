@@ -6,17 +6,14 @@ class svc_jira (
 	){
 	include apt
     include mysql
-    include tomcat
     include apache2
     include secrets
 
-    # All these should be passed in.
-    $context = "jira"
-    $number = 0
-
+	$jiradb=jiradb71
 
     $dbpass = sha1("${fqdn}${secrets::secret}jirauser")
     $driver_url = "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.34.zip"
+    $context = "jira"
 
     # Setup the Mysql user and DB
     mysql::user { 'jirauser': 
@@ -24,7 +21,7 @@ class svc_jira (
         password => $dbpass,
     }
     mysql::db { 'jiradb':
-        name => 'jiradb63',
+        name => "${jiradb}",
         owner => 'jirauser'
     }
     
@@ -64,38 +61,25 @@ class svc_jira (
     }
 
     # The jira setup
-    class { "jira": 
+    class { "jira7": 
         user => "jira", #the system user that will own the JIRA Tomcat instance
-        database_name => "jiradb63",
+        database_name => "${jiradb}",
         database_type => "mysql",
         database_schema => "",
         database_driver => "com.mysql.jdbc.Driver",
         database_driver_jar => "mysql-connector-java-5.1.34-bin.jar",
         database_driver_source => "file:///var/cache/puppet/jira/mysql-connector-java-5.1.34-bin.jar",
         # Ends up in an XML file so needs to be encoded.
-        database_url => "jdbc:mysql://localhost/jiradb63?useUnicode=true&amp;characterEncoding=UTF8&amp;sessionVariables=storage_engine=InnoDB",
+        database_url => "jdbc:mysql://localhost/${jiradb}?useUnicode=true&amp;characterEncoding=UTF8&amp;sessionVariables=storage_engine=InnoDB",
         database_user => "jirauser",
         database_pass => $dbpass,
-        number => $number, # the Tomcat http port will be 8280
         version => "7.0.10", # the JIRA version
-        jira_jars_version => "7.0",
-        contextroot => "jira",
-        webapp_base => "/opt", # JIRA will be installed in /opt/jira
         http => false,
         require => [
                 Mysql::Db['jiradb'],
-                Class["tomcat"],
-                Exec["extract-db-driver"]
         ]
     }
-    
-    # Log rotation
-    file { "/etc/logrotate.d/jira":
-        source => "puppet:///modules/svc_jira/logrotate/jira",
-        owner => root,
-        group => root,
-        mode => 644,
-    }
+
     
     # Backup cleanup
     file { "/etc/cron.daily/jira":
@@ -122,7 +106,7 @@ class svc_jira (
         require => [
             Ssl::Cert["${hostname_virtual}"],
             File["/etc/apache2/sites-available/jira.conf"],
-            Class["jira"],
+            Class["jira7"],
         ]
     }
 

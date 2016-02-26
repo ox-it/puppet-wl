@@ -54,8 +54,9 @@ node 'chedder' inherits default {
     }
 }
 
+
 # Node which runs jira.oucs.ox.ac.uk
-node 'wensleydale' inherits default {
+node 'ricotta' inherits default {
     class { 'svc_jira':
         hostname_virtual => 'jira.oucs.ox.ac.uk',
         hostname_alts => ['jira.it.ox.ac.uk'],

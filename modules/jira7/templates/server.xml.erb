@@ -50,7 +50,7 @@
     -->
     <Service name="Catalina">
 
-<!--
+<% if @http == true -%>
         <Connector port="8080"
 
                    maxThreads="150"
@@ -64,53 +64,12 @@
                    redirectPort="8443"
                    acceptCount="100"
                    disableUploadTimeout="true"/>
--->
+<% end -%>
 
-        <!--
-        ====================================================================================
+<% if @ajp == true -%>
+        <Connector port="8009" redirectPort="8443" enableLookups="false" protocol="AJP/1.3" URIEncoding="UTF-8"/>
+<% end -%>
 
-        To run JIRA via HTTPS:
-
-             * Uncomment the Connector below
-             * Execute:
-                 %JAVA_HOME%\bin\keytool -genkey -alias tomcat -keyalg RSA (Windows)
-                 $JAVA_HOME/bin/keytool -genkey -alias tomcat -keyalg RSA  (Unix)
-               with a password value of "changeit" for both the certificate and the keystore itself.
-             * If you are on JDK1.3 or earlier, download and install JSSE 1.0.2 or later, and put the JAR files into
-               "$JAVA_HOME/jre/lib/ext"
-             * Restart and visit https://localhost:8443/
-
-             For more info, see :
-
-              http://confluence.atlassian.com/display/JIRA/Running+JIRA+over+SSL+or+HTTPS
-
-              and
-
-              http://tomcat.apache.org/tomcat-6.0-doc/ssl-howto.html
-
-        ====================================================================================
-        -->
-        <!--
-            <Connector port="8443" protocol="org.apache.coyote.http11.Http11Protocol"
-              maxHttpHeaderSize="8192" SSLEnabled="true"
-              maxThreads="150" minSpareThreads="25"
-              enableLookups="false" disableUploadTimeout="true"
-              acceptCount="100" scheme="https" secure="true"
-              clientAuth="false" sslProtocol="TLS" useBodyEncodingForURI="true"/>
-        -->
-
-
-        <!--
-         ====================================================================================
-
-         If you have Apache AJP Connector (mod_ajp) as a proxy in front of JIRA you should uncomment the following connector configuration line
-
-         See the following for more information :
-
-            http://confluence.atlassian.com/display/JIRA/Configuring+Apache+Reverse+Proxy+Using+the+AJP+Protocol
-
-         ====================================================================================
-        -->
         <Engine name="Catalina" defaultHost="localhost">
             <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">
 

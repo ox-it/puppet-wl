@@ -77,6 +77,15 @@ class jira7 (
 		mode => 640,
 	}
 	
+	file { "server.xml" :
+		path => "${jira_dir}/conf/server.xml",
+		ensure => present,
+		content => template("jira7/server.xml.erb"),
+		require => Exec["install-jira"],
+		owner => root,
+		mode => 644,
+	}
+	
 	# the database driver jar
 	file { 'jira-db-driver':
 		path => "${jira_dir}/lib/${database_driver_jar}", 

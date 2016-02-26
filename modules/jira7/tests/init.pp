@@ -59,7 +59,6 @@ class { "jira7":
 	database_url => "jdbc:mysql://localhost/jiradb",
 	database_user => "jirauser",
 	database_pass => $dbpass,
-	contextroot => "jira",
     ajp => false, # Not needed here.
 	require => [
 		Mysql::Db['jiradb'],

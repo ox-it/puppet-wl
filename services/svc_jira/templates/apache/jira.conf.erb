@@ -1,6 +1,6 @@
 
 <VirtualHost <%= @listen %>:80>
-        ServerAdmin matthew.buckett@oucs.ox.ac.uk
+        ServerAdmin matthew.buckett@it.ox.ac.uk
         ServerName <%= @hostname_virtual %>
 
         # Force all traffic through https
@@ -14,7 +14,7 @@
 <VirtualHost <%= @listen %>:443>
 
     ServerName <%= @hostname_virtual %>
-    DocumentRoot /var/www/jira
+    DocumentRoot /var/www/
 
     SSLEngine on
     SSLCertificateFile      /etc/ssl/certs/<%= @hostname_virtual %>.crt
