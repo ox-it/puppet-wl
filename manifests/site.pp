@@ -64,7 +64,7 @@ node 'ricotta' inherits default {
     class { 'tsm':
         server_name       => 'OX_HFS_B14',
         server_address    => 'dsmb14.ox.ac.uk',
-        server_port       => '2800',
+        server_port       => '3500',
         node_name         => 'ricotta.it',
         scheduler_enabled => 1,
     }
