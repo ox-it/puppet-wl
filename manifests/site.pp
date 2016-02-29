@@ -62,10 +62,10 @@ node 'ricotta' inherits default {
         hostname_alts => ['jira.it.ox.ac.uk'],
     }
     class { 'tsm':
-        server_name       => 'OX_HFS_B8',
-        server_address    => 'dsmb8.ox.ac.uk',
+        server_name       => 'OX_HFS_B14',
+        server_address    => 'dsmb14.ox.ac.uk',
         server_port       => '2800',
-        node_name         => 'wensleydale.it',
+        node_name         => 'ricotta.it',
         scheduler_enabled => 1,
     }
 }
