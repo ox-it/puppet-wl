@@ -1,23 +1,23 @@
 class ssl {
 
-  define cert ( $alts = undef, $public = undef, $chain = undef ) {
+  define cert ( $alts = undef, $public = undef, $chain = undef, $user = root, $group = root) {
     file { "/etc/ssl/${name}.cnf":
         content => template('ssl/cert.erb'),
-        owner => root,
-        group => root,
+        owner => $user,
+        group => $group,
         mode => 0644,
     }
 
     file { "/etc/ssl/certs/${name}.crt":
-        owner => root,
-        group => root,
+        owner => $user,
+        group => $group,
         mode => 0644,
         source => $public,
     }
 
     file { "/etc/ssl/private/${name}.key":
-        owner => root,
-        group => root,
+        owner => $user,
+        group => $group,
         mode => 0640,
     }
 

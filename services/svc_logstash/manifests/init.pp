@@ -120,6 +120,7 @@ class svc_logstash (
   ssl::cert { $hostname_virtual:
     public => "puppet:///modules/svc_logstash/${hostname_virtual}.crt",
     chain => "puppet:///modules/svc_logstash/swiss-sign-chain.crt.pem",
+    group => rabbitmq,
   } ->
 
   exec { "link-private":
