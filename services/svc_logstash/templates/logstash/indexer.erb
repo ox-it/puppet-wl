@@ -10,6 +10,11 @@ input {
 }
 
 # Add your filters here
+filter {
+	date {
+		match => [ "timestamp", "UNIX_MS" ]
+	}
+}
 
 output {
 	elasticsearch { 
