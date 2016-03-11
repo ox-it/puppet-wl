@@ -53,28 +53,6 @@ class rabbitmq {
     notify => [ Exec['apt-update'] ],
   }
 
-  file { '/etc/rabbitmq/cert.pem':
-    owner => rabbitmq,
-    group => rabbitmq,
-    mode => 0640,
-    require => [ Package['rabbitmq'] ],
-  }
-
-  file { '/etc/rabbitmq/key.pem':
-    owner => rabbitmq,
-    group => rabbitmq,
-    mode => 0640,
-    require => [ Package['rabbitmq'] ],
-  }
-
-  file { '/etc/rabbitmq/cacert.pem':
-    owner => rabbitmq,
-    group => rabbitmq,
-    mode => 0640,
-    require => [ Package['rabbitmq'] ],
-  }
-
-  
   service { 'rabbitmq':
     name => 'rabbitmq-server',
     ensure => running,
