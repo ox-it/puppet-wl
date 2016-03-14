@@ -6,6 +6,8 @@ input {
 		user => "<%= @rabbitmq_username %>"
 		password => "<%= @rabbitmq_password %>"
 		queue => "logstash"
+		exchange => "logstash"
+		key => ""
 	}
 }
 
