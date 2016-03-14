@@ -38,9 +38,9 @@
         ProxyPass /<%= @context %> ajp://localhost:8<%= @number %>09/<%= @context %>
         ProxyPassReverse /<%= @context %> ajp://localhost:8<%= @number %>09/<%= @context %>
 
-        # Redirect to the default webapp
-        RewriteEngine On 
-        RewriteRule ^/(<%= @context %>)?$ /<%= @context %>/ [R,L]
+        # Redirect all the old Jira links
+        RewriteEngine On
+        RewriteRule ^/jira(.*)$ https://<%= @hostname_virtual %> [R,L]
 
 </VirtualHost>
 </IfModule>
