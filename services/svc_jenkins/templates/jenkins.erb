@@ -59,4 +59,4 @@ PREFIX=/jenkins
 # --webroot=~/.jenkins/war 
 # --prefix=$PREFIX
 
-JENKINS_ARGS="--webroot=/var/cache/jenkins/war --httpPort=$HTTP_PORT --ajp13Port=$AJP_PORT --httpListenAddress=$HTTP_HOST"
+JENKINS_ARGS="-Dhudson.DNSMultiCast.disabled=true --webroot=/var/cache/jenkins/war --httpPort=$HTTP_PORT --ajp13Port=$AJP_PORT --httpListenAddress=$HTTP_HOST"
