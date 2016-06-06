@@ -75,6 +75,7 @@ class svc_jira (
         database_pass => $dbpass,
         version => "7.0.10", # the JIRA version
         http => false,
+        ajp => true,
         require => [
                 Mysql::Db['jiradb'],
         ]

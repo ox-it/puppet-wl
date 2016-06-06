@@ -2,4 +2,4 @@
 # This cleans up docker images that are no longer used
 # This always complains about an image that is used by a container so we redirect
 # the output so we don't get mailed about it every day.
-which docker >/dev/null && docker images -f dangling=true -q | xargs docker rmi 2>/dev/null
+FORCE_IMAGE_REMOVAL=1 /usr/sbin/docker-gc
