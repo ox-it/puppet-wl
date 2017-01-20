@@ -21,13 +21,13 @@ class jira7 (
 	$database_url = "jdbc:postgresql://localhost/jira",
 	$database_user = "jira",
 	$database_pass = "jira",
-	$version = "7.1.0",
+	$version = "7.2.2",
     $http = true,
     $ajp = true,
 ){
 	
 # configuration
-	$jira_build = "atlassian-jira-software-${version}-jira-${version}-x64.bin" 
+	$jira_build = "atlassian-jira-software-${version}-x64.bin" 
 	$installer = "${jira_build}"
 	$download_dir = "/tmp"
 	$downloaded_installer = "${download_dir}/${installer}"

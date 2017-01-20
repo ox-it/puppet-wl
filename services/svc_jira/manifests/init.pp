@@ -73,7 +73,7 @@ class svc_jira (
         database_url => "jdbc:mysql://localhost/${jiradb}?useUnicode=true&amp;characterEncoding=UTF8&amp;sessionVariables=storage_engine=InnoDB",
         database_user => "jirauser",
         database_pass => $dbpass,
-        version => "7.0.10", # the JIRA version
+        version => "7.2.2", # the JIRA version
         http => false,
         ajp => true,
         require => [
