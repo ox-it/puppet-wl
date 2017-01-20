@@ -119,6 +119,10 @@ class svc_jira (
         ensure => "present",
     }
 
+    apache2::module { "headers":
+        ensure => "present",
+    }
+
     apache2::module { "ssl":
         ensure => "present",
         require => [

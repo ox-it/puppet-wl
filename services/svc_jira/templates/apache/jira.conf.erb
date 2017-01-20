@@ -42,5 +42,7 @@
         RewriteEngine On
         RewriteRule ^/jira(.*)$ https://<%= @hostname_virtual %> [R,L]
 
+     Header always append X-Frame-Options SAMEORIGIN
+
 </VirtualHost>
 </IfModule>
